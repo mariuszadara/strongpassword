@@ -172,4 +172,3 @@ Distributed under the MIT License. See `LICENSE` for more information.
 Marius Zadar&atilde; - github@zadara.org
 
 Project Link: [https://github.com/mariuszadara/strongpassword](https://github.com/mariuszadara/strongpassword)
-
