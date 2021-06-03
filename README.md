@@ -122,14 +122,14 @@ You have now a list of passwords that you can use or, optionally:
 
 ### Complete example
 
-You can find a complete example with all the explanations here: [Strong password example](https://example.com).
-It will generate some passwords according to the default options, gaving them sorted descending by the score and time and present them into the console output.
+You can find a complete example with all the explanations here: [Strong password example](StrongPasswordExample.java).
+It will generate some passwords according to the default options, having them sorted descending by the score and time and present them into the console output.
  
 
 
 ### Live example
 
-A live project based on this appplication you can find at: [Strong password live REST](http://api.zadara.org/strongpassword/)
+A live project based on this application you can find at: [Strong password live REST](http://api.zadara.org/strongpassword/)
 Just do a GET request having in it's body the JSON indicating the properties, and you will obtain a list of passwords.
 
 
@@ -139,7 +139,7 @@ Just do a GET request having in it's body the JSON indicating the properties, an
 There are various options you can pass to the application via the dedicated objects. You can also set your own value by using dedicated setters, 
 but if you want to use load the options from a file or a map, you should use this properties file, where all the keys and their meaning are present:  
 
-[Strong password options file](https://example.com)
+[Strong password options file](options.properties)
 
 
 
