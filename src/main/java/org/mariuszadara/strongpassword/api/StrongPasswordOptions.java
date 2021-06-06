@@ -474,6 +474,7 @@ public class StrongPasswordOptions {
 		validateMaxRunningTime();
 		validateMaxResults();
 		validateMaxThreads();
+		validateMins();
 	}
 	
 	private void validateLength() {
@@ -575,6 +576,25 @@ public class StrongPasswordOptions {
 		if (maxThreadsCount > availableThreads) {
 			throw new StrongPasswordException(StrongPasswordException.MAX_THREADS_TOO_HIGHT,
 					String.format("The maximum threads count should not exceed %d", availableThreads));
+		}
+	}
+	
+	private void validateMins() {
+		
+		int realLength =
+				(shouldUseSymbols() ? minSymbolsCount : 0) +
+				(shouldUseNumbers() ? minNumbersCount : 0) + 
+				(shouldUseLowercaseCharacters() ? minLowercaseCharactersCount : 0) + 
+				(shouldUseUppercaseCharacters() ? minUppercaseCharactersCount : 0);
+		
+		if (realLength == 0) {
+			throw new StrongPasswordException(StrongPasswordException.EXPECTED_LENGTH_IS_ZERO, 
+				"None of the generated passwords will be valid since the actual length will be equal to 0 (zero) since no dictionary is to be used.");
+		}
+		
+		if (realLength > length) {
+			throw new StrongPasswordException(StrongPasswordException.EXPECTED_MIN_LENGTH_GREATER_REQUIRED_LENGTH, 
+				String.format("The expected minimum length of the password resulting from combining dictionaries exceeds the password length: actual length=%d, required length=%d", realLength, length));
 		}
 	}
 }

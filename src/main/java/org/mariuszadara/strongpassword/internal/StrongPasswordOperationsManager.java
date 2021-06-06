@@ -31,6 +31,5 @@ interface StrongPasswordOperationsManager {
 		return true;
 	}
 	
-	
 	void releaseSession();
 }

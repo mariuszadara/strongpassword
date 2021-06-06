@@ -126,6 +126,21 @@ public class StrongPasswordException extends RuntimeException {
 	 * Error code indicating that the password to validate is invalid
 	 */
 	public static final int PASSWORD_TO_VALIDATE_IS_INVALID = 26;
+	
+	/**
+	 * Error code indicating that the length determined by the minimum lengths of symbols, numbers, lower-case and upper-case characters
+	 * exceeds the length of the password - in this case, no password will be generated since the minimum count will never be reached.
+	 */
+	public static final int EXPECTED_MIN_LENGTH_GREATER_REQUIRED_LENGTH = 27;
+	
+	/**
+	 * Error code indicating the the actual length of the password resulting from combining the minimum symbols, number, lower-case and upper-case characters
+	 * will be equal to zero, thus not returning any password at all.
+	 */
+	public static final int EXPECTED_LENGTH_IS_ZERO = 28;
+	
+	
+	
 
 	/**
 	 * Field containg the current exception error code

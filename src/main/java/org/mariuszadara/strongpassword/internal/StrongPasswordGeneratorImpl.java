@@ -120,7 +120,6 @@ public class StrongPasswordGeneratorImpl implements StrongPasswordGenerator, Str
 		return IntStream.range(0, options.getThreadsCount())
 				.mapToObj(index -> new StrongPasswordValidatorThread("strong-password-validator-" + index, options, this))
 				.collect(Collectors.toList());
-
 	}
 	
 	private void init(StrongPasswordOptions options) {
@@ -152,7 +151,7 @@ public class StrongPasswordGeneratorImpl implements StrongPasswordGenerator, Str
 	
 	private String generateCandidate() {
 
-		var candidate = new char[passwordLength];
+		var candidate = new StringBuilder(passwordLength);
 
 		for (var i = 0; i < passwordLength; i++) {
 
@@ -166,9 +165,9 @@ public class StrongPasswordGeneratorImpl implements StrongPasswordGenerator, Str
 			var targetList = availableLists.get(listIndex);
 			var entryIndex = random.nextInt(targetList.length());
 
-			candidate[i] = targetList.charAt(entryIndex);
+			candidate.append(targetList.charAt(entryIndex));
 		}
 
-		return new String(candidate);
+		return candidate.toString();
 	}
 }

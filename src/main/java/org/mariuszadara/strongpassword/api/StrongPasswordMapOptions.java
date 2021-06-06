@@ -76,7 +76,10 @@ public class StrongPasswordMapOptions extends StrongPasswordOptions {
 	public static final String AMBIGOUS_CHARACTERS_KEY = "dictionary.ambigousCharacters";
 	
 	
-	
+	/**
+	 * Constructor using a map
+	 * @param map The map to use
+	 */
 	public StrongPasswordMapOptions(Map<String, Object> map) {
 		super();
 		loadFromMap(map);

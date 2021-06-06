@@ -129,8 +129,8 @@ It will generate some passwords according to the default options, having them so
 
 ### Live example
 
-A live project based on this application you can find at: [Strong password live REST](https://api.zadara.org/strongpassword/)
-Just do a GET request having in it's body the JSON indicating the properties, and you will obtain a list of passwords.
+A live project based on this application you can find at: [Strong password live REST](https://api.zadara.org/strongpassword/v1)
+Just do a POST request having in it's body the JSON indicating the properties, and you will obtain a list of passwords.
 
 
 

@@ -8,8 +8,19 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+
+/**
+ * This is an implementation of the options based on a file.
+ * 
+ * @author mariuszadara
+ * @since 1.0.0
+ */
 public class StrongPasswordFileOptions extends StrongPasswordMapOptions {
 
+	/**
+	 * Constructor using a file object
+	 * @param file The file to use
+	 */
 	public StrongPasswordFileOptions(File file) {
 		super(Collections.emptyMap());
 		loadFromFile(file);

@@ -63,6 +63,6 @@ public class StrongPasswordScorerImpl implements StrongPasswordScorer {
 	}
 
 	private long count(String candidate, String list) {
-		return candidate.chars().filter(x -> list.indexOf(x) != -1).count();
+		return candidate.chars().filter(ch -> isInList((char) ch, list)).count();
 	}
 }

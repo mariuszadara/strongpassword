@@ -37,6 +37,6 @@ public class StrongPasswordEstimatorImpl implements StrongPasswordEstimator {
 	
 	
 	private long count(String candidate, String list) {
-		return candidate.chars().filter(x -> list.indexOf(x) != -1).count();
+		return candidate.chars().filter(ch -> list.indexOf(ch) != -1).count();
 	}
 }

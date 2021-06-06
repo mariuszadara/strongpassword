@@ -1,7 +1,5 @@
 package org.mariuszadara.strongpassword.internal;
 
-import java.util.ArrayList;
-
 import org.mariuszadara.strongpassword.api.StrongPasswordOptions;
 import org.mariuszadara.strongpassword.api.StrongPasswordValidator;
 
@@ -16,7 +14,8 @@ public class StrongPasswordValidatorImpl implements StrongPasswordValidator {
 	private int minNumbers;
 	private int minLowercaseCharacters;
 	private int minUppercaseCharacters;
-
+	private int maxGroupLength;
+	
 	private boolean includeSymbols;
 	private boolean includeNumbers;
 	private boolean includeLowercaseCharacters;
@@ -45,19 +44,21 @@ public class StrongPasswordValidatorImpl implements StrongPasswordValidator {
 			(includeLowercaseCharacters && (includeSymbols || includeNumbers) ? (countConsecutiveLowercaseCharacters(candidate) == 0) : true) &&
 			(includeNumbers && (includeSymbols || includeCharacters) ? (countConsecutiveNumbers(candidate) == 0) : true) &&
 			(includeSymbols && (includeNumbers || includeCharacters) ? (countConsecutiveSymbols(candidate) == 0) : true) &&
-			
-			(includeCharacters && (includeSymbols || includeNumbers) ? (countGroupedLetters(candidate, 3) == 0) : true) &&
-			(includeNumbers && (includeSymbols || includeCharacters) ? (countGroupedNumbers(candidate, 3) == 0) : true) &&
-			(includeSymbols && (includeNumbers || includeCharacters) ? (countGroupedSymbols(candidate, 3) == 0) : true);
-		// @formatter:on
+	
+			(includeCharacters && (includeSymbols || includeNumbers) ? (countGroupedLetters(candidate, maxGroupLength) == 0) : true) &&
+			(includeNumbers && (includeSymbols || includeCharacters) ? (countGroupedNumbers(candidate, maxGroupLength) == 0) : true) &&
+			(includeSymbols && (includeNumbers || includeCharacters) ? (countGroupedSymbols(candidate, maxGroupLength) == 0) : true);
+
+		 // @formatter:on
 	}
 	
 	private void init(StrongPasswordOptions options) {
+		
 		allSymbols = options.getSymbols();
 		allNumbers = options.getNumbers();
 		allLowercaseCharacters = options.getLowercaseCharacters();
 		allUppercaseCharacters = options.getUppercaseCharacters();
-
+		
 		minSymbols = options.getMinSymbolsCount();
 		minNumbers = options.getMinNumbersCount();
 		minLowercaseCharacters = options.getMinLowercaseCharactersCount();
@@ -68,6 +69,16 @@ public class StrongPasswordValidatorImpl implements StrongPasswordValidator {
 		includeLowercaseCharacters = options.shouldUseLowercaseCharacters();
 		includeUppercaseCharacters = options.shouldUseUppercaseCharacters();
 		includeCharacters = includeLowercaseCharacters || includeUppercaseCharacters;
+		
+		// @formatter:off
+		int groups = 
+				(includeSymbols ? 1 : 0) + 
+				(includeNumbers ? 1 : 0) + 
+				(includeLowercaseCharacters ? 1 : 0) + 
+				(includeUppercaseCharacters ? 1 : 0);
+		// @formatter:on
+		
+		maxGroupLength = groups == 0 ? 3 : options.getLength() / groups;
 	}
 
 	private long countSymbols(String candidate) {
@@ -87,7 +98,7 @@ public class StrongPasswordValidatorImpl implements StrongPasswordValidator {
 	}
 
 	private long count(String candidate, String list) {
-		return candidate.chars().filter(x -> list.indexOf(x) != -1).count();
+		return candidate.chars().filter(ch -> list.indexOf(ch) != -1).count();
 	}
 
 	private boolean isOnlyLetters(String entry) {
@@ -103,28 +114,11 @@ public class StrongPasswordValidatorImpl implements StrongPasswordValidator {
 	}
 
 	private boolean isOnly(String entry, String list) {
-		return entry.chars().allMatch(x -> list.indexOf(x) != -1);
+		return entry.chars().allMatch(ch -> list.indexOf(ch) != -1);
 	}
 
 	private int countRepeatCharacters(String entry) {
-
-		var count = 0;
-
-		for (var i = 0; i < entry.length() - 1; i++) {
-
-			var uppercase1 = Character.toUpperCase(entry.charAt(i));
-
-			for (int j = i + 1; j < entry.length(); j++) {
-
-				var uppercase2 = Character.toUpperCase(entry.charAt(j));
-
-				if (uppercase1 == uppercase2) {
-					count++;
-				}
-			}
-		}
-
-		return count;
+		return entry.length() - (int) entry.chars().distinct().count();
 	}
 
 	private int countConsecutiveUppercaseCharacters(String entry) {
@@ -176,7 +170,6 @@ public class StrongPasswordValidatorImpl implements StrongPasswordValidator {
 		var count = 0;
 
 		for (var i = 0; i < entry.length() - 1; i++) {
-
 			if (isNumber(entry.charAt(i)) && isNumber(entry.charAt(i + 1))) {
 				count++;
 			}
@@ -221,29 +214,29 @@ public class StrongPasswordValidatorImpl implements StrongPasswordValidator {
 
 	private int countGrouped(String entry, int groupLength, String list) {
 
-		var count = 0;
-		var block = new ArrayList<>();
+		var groupsCount = 0;
+		var currentGroupLength = 0;
 		
 		for (var i=0; i < entry.length(); i++) {
 			
 			if (list.indexOf(entry.charAt(i)) != -1)  {
 				
-				if (block.size() == groupLength) {
-					count ++;
-					block.clear();
+				if (currentGroupLength == groupLength) {
+					groupsCount ++;
+					currentGroupLength = 0;
 				}
 				
-				block.add(entry.charAt(i));
+				currentGroupLength ++;
 			}
 			else {
-				block.clear();
+				currentGroupLength = 0;
 			}
 		}
 		
-		if (block.size() == groupLength) {
-			count ++;
+		if (currentGroupLength == groupLength) {
+			groupsCount ++;
 		}			
 		
-		return count;
+		return groupsCount;
 	}
 }
