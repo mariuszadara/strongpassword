@@ -114,7 +114,7 @@ You have now a list of passwords that you can use or, optionally:
 
 - compute score: `var scorer = StrongPasswordScorerFactory.make(); passwords.forEach(password -> scorer.computeScore(options, password))`
 
-- estimate decode time: `var estimator = StrongPasswordEstimatorFactory.make();passwords.forEach(password -> estimator.estimateDecodeTime(options, password))`
+- estimate decode time: `var estimator = StrongPasswordEstimatorFactory.make(); passwords.forEach(password -> estimator.estimateDecodeTime(options, password))`
 
 - having score and/or decode time, you can sort the list of passwords according to your needs and present them to the user. 
 
@@ -129,8 +129,7 @@ It will generate some passwords according to the default options, having them so
 
 ### Live example
 
-A live project based on this application you can find at: [Strong password live REST](https://api.zadara.org/strongpassword/v1)
-Just do a POST request having in it's body the JSON indicating the properties, and you will obtain a list of passwords.
+A live project based on this application you can find at: [Strong password live](https://api.zadara.org/strongpassword/)
 
 
 
