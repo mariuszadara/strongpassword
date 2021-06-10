@@ -13,23 +13,23 @@ public class StrongPasswordMapOptions extends StrongPasswordOptions {
 	/**
 	 * Key for the password length
 	 */
-	public static final String LENGTH_KEY = "password.length";
+	public static final String PASSWORD_LENGTH_KEY = "password.length";
 	/**
 	 * Key for the minimum symbols count
 	 */
-	public static final String MIN_SYMBOLS_KEY = "password.minSymbols";
+	public static final String MIN_SYMBOLS_COUNT_KEY = "password.minSymbols";
 	/**
 	 * Key for the minimum numbers count
 	 */
-	public static final String MIN_NUMBERS_KEY = "password.minNumbers";
+	public static final String MIN_NUMBERS_COUNT_KEY = "password.minNumbers";
 	/**
 	 * Key for minimum lowercase characters
 	 */
-	public static final String MIN_LOWERCASE_CHARACTERS_KEY = "password.minLowercaseCharacters";
+	public static final String MIN_LOWERCASE_CHARACTERS_COUNT_KEY = "password.minLowercaseCharacters";
 	/**
 	 * Key for the minimum uppercare characters
 	 */
-	public static final String MIN_UPPERCASE_CHARACTERS_KEY = "password.minUppercaseCharacters";
+	public static final String MIN_UPPERCASE_CHARACTERS_COUNT_KEY = "password.minUppercaseCharacters";
 	/**
 	 * Key to exclude similar characters
 	 */
@@ -49,7 +49,7 @@ public class StrongPasswordMapOptions extends StrongPasswordOptions {
 	/**
 	 * Key for threads count
 	 */
-	public static final String MAX_THREADS_COUNT_KEY = "engine.threadsCount";
+	public static final String THREADS_COUNT_KEY = "engine.threadsCount";
 	/**
 	 * Key for the symbols to use
 	 */
@@ -78,34 +78,35 @@ public class StrongPasswordMapOptions extends StrongPasswordOptions {
 	
 	/**
 	 * Constructor using a map
-	 * @param map The map to use
+	 * @param options The map of options to use
 	 */
-	public StrongPasswordMapOptions(Map<String, Object> map) {
+	public StrongPasswordMapOptions(Map<String, Object> options) {
 		super();
-		loadFromMap(map);
+		loadFromOptions(options);
 	}
 
-	protected final void loadFromMap(Map<String, Object> map) {
+	protected final void loadFromOptions(Map<String, Object> options) {
 
-		if (map == null || map.isEmpty()) {
+		if (options == null || options.isEmpty()) {
 			return;
 		}
 
-		setLength((int) map.getOrDefault(LENGTH_KEY, DEFAULT_LENGTH));
-		setMinSymbolsCount((int) map.getOrDefault(MIN_SYMBOLS_KEY, DEFAULT_MIN_SYMBOLS_COUNT));
-		setMinNumbersCount((int) map.getOrDefault(MIN_NUMBERS_KEY, DEFAULT_MIN_NUMBERS_COUNT));
-		setMinLowercaseCharactersCount((int) map.getOrDefault(MIN_LOWERCASE_CHARACTERS_KEY, DEFAULT_MIN_LOWERCASE_CHARACTERS_COUNT));
-		setMinUppercaseCharactersCount((int) map.getOrDefault(MIN_UPPERCASE_CHARACTERS_KEY, DEFAULT_MIN_UPPERCASE_CHARACTERS_COUNT));
-		setExcludeSimilarCharacters((boolean) map.getOrDefault(EXCLUDE_SIMILAR_CHARACTERS_KEY, DEFAULT_EXCLUDE_SIMILAR_CHARACTERS));
-		setExcludeAmbigousCharacters((boolean) map.getOrDefault(EXCLUDE_AMBIGOUS_CHARACTERS_KEY, DEFAULT_EXCLUDE_AMBIGOUS_CHARACTERS));
-		setMaxRunningTime((int) map.getOrDefault(MAX_RUNNING_TIME_KEY, DEFAULT_MAX_RUNNING_TIME));
-		setThreadsCount((int) map.getOrDefault(MAX_THREADS_COUNT_KEY, DEFAULT_MAX_THREADS_COUNT));
-		setSymbols((String) map.getOrDefault(SYMBOLS_KEY, DEFAULT_SYMBOLS));
-		setNumbers((String) map.getOrDefault(NUMBERS_KEY, DEFAULT_NUMBERS));
-		setLowercaseCharacters((String) map.getOrDefault(LOWERCASE_CHARACTERS_KEY, DEFAULT_LOWERCASE_CHARACTERS));
-		setUppercaseCharacters((String) map.getOrDefault(UPPERCASE_CHARACTERS_KEY, DEFAULT_UPPERCASE_CHARACTERS));
-		setSimilarCharacters((String) map.getOrDefault(SIMILAR_CHARACTERS_KEY, DEFAULT_SIMILAR_CHARACTERS));
-		setAmbigousCharacters((String) map.getOrDefault(AMBIGOUS_CHARACTERS_KEY, DEFAULT_AMBIGOUS_CHARACTERS));
-		setMaxResultsCount((int) map.getOrDefault(MAX_RESULTS_KEY, DEFAULT_MAX_RESULTS_COUNT));
+		setPasswordLength(options.getOrDefault(PASSWORD_LENGTH_KEY, PASSWORD_LENGTH));
+		setMinSymbolsCount(options.getOrDefault(MIN_SYMBOLS_COUNT_KEY, MIN_SYMBOLS_COUNT));
+		setMinNumbersCount(options.getOrDefault(MIN_NUMBERS_COUNT_KEY, MIN_NUMBERS_COUNT));
+		setMinNumbersCount(options.getOrDefault(MIN_NUMBERS_COUNT_KEY, MIN_NUMBERS_COUNT));
+		setMinLowercaseCharactersCount(options.getOrDefault(MIN_LOWERCASE_CHARACTERS_COUNT_KEY, MIN_LOWERCASE_CHARACTERS_COUNT));
+		setMinUppercaseCharactersCount(options.getOrDefault(MIN_UPPERCASE_CHARACTERS_COUNT_KEY, MIN_UPPERCASE_CHARACTERS_COUNT));
+		setExcludeSimilarCharacters(options.getOrDefault(EXCLUDE_SIMILAR_CHARACTERS_KEY, EXCLUDE_SIMILAR_CHARACTERS));
+		setExcludeAmbigousCharacters(options.getOrDefault(EXCLUDE_AMBIGOUS_CHARACTERS_KEY, EXCLUDE_AMBIGOUS_CHARACTERS));
+		setMaxRunningTime(options.getOrDefault(MAX_RUNNING_TIME_KEY, MAX_RUNNING_TIME));
+		setThreadsCount(options.getOrDefault(THREADS_COUNT_KEY, MAX_THREADS_COUNT));
+		setSymbols(options.getOrDefault(SYMBOLS_KEY, SYMBOLS));
+		setNumbers(options.getOrDefault(NUMBERS_KEY, NUMBERS));
+		setLowercaseCharacters(options.getOrDefault(LOWERCASE_CHARACTERS_KEY, LOWERCASE_CHARACTERS));
+		setUppercaseCharacters(options.getOrDefault(UPPERCASE_CHARACTERS_KEY, UPPERCASE_CHARACTERS));
+		setSimilarCharacters(options.getOrDefault(SIMILAR_CHARACTERS_KEY, SIMILAR_CHARACTERS));
+		setAmbigousCharacters(options.getOrDefault(AMBIGOUS_CHARACTERS_KEY, AMBIGOUS_CHARACTERS));
+		setMaxResultsCount(options.getOrDefault(MAX_RESULTS_KEY, MAX_RESULTS_COUNT));
 	}
 }

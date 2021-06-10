@@ -10,191 +10,328 @@ package org.mariuszadara.strongpassword.api;
 public class StrongPasswordOptions {
 	
 	/**
-	 * Default password length
+	 * The default password length
 	 */
-	public static final int DEFAULT_LENGTH = 18;
+	public static final int PASSWORD_LENGTH = 18;
+	
 	/**
-	 * Default minimum symbols count
+	 * The lower limit for the password length
 	 */
-	public static final int DEFAULT_MIN_SYMBOLS_COUNT = 4;
+	public static final int PASSWORD_LENGTH_LOWER_LIMIT = 8;
+	
 	/**
-	 * Default minimum numbers count
+	 * The upper limit for the password length
 	 */
-	public static final int DEFAULT_MIN_NUMBERS_COUNT = 4;
+	public static final int PASSWORD_LENGTH_UPPER_LIMIT = 30;
+	
 	/**
-	 * Default minimum lowercase characters
+	 * The default minimum symbols count
 	 */
-	public static final int DEFAULT_MIN_LOWERCASE_CHARACTERS_COUNT = 4;
+	public static final int MIN_SYMBOLS_COUNT = 4;
+	
 	/**
-	 * Default minimum uppercase characters
+	 * The lower limit for minimum symbols count
 	 */
-	public static final int DEFAULT_MIN_UPPERCASE_CHARACTERS_COUNT = 4;
+	public static final int MIN_SYMBOLS_COUNT_LOWER_LIMIT = 2;
+	
+	/**
+	 * The default minimum numbers count
+	 */
+	public static final int MIN_NUMBERS_COUNT = 4;
+	
+	/**
+	 * The lower limit for minimum numbers count
+	 */
+	public static final int MIN_NUMBERS_COUNT_LOWER_LIMIT = 2;
+	
+	/**
+	 * The default minimum lowercase characters count
+	 */	
+	public static final int MIN_LOWERCASE_CHARACTERS_COUNT = 4;
+	
+	/**
+	 * The lower limit for the minimum lowercase characters count
+	 */	
+	public static final int MIN_LOWERCASE_CHARACTERS_COUNT_LOWER_LIMIT = 2;
+	
+	/**
+	 * The default minimum uppercase characters count
+	 */	
+	public static final int MIN_UPPERCASE_CHARACTERS_COUNT = 4;
+	
+	/**
+	 * The lower limit for the minimum lowercase characters count
+	 */	
+	public static final int MIN_UPPERCASE_CHARACTERS_COUNT_LOWER_LIMIT = 2;
+
+	/**
+	 * The default maximum running time
+	 */	
+	public static final int MAX_RUNNING_TIME = 10_000;
+	
+	/**
+	 * The upper limit for the minimum lowercase characters count
+	 */	
+	public static final int MAX_RUNNING_TIME_UPPER_LIMIT = 15_000;
+	
+	/**
+	 * The default maximum results count
+	 */
+	public static final int MAX_RESULTS_COUNT = 5;
+	
+	/**
+	 * The upper limit for the maximum results count
+	 */
+	public static final int MAX_RESULTS_COUNT_UPPER_LIMIT = 15;
+	
+	/**
+	 * The default maximum threads count
+	 */	
+	public static final int MAX_THREADS_COUNT = 2;
+	
+	/**
+	 * The upper limit for the maximum threads count
+	 */
+	public static final int MAX_THREADS_COUNT_UPPER_LIMIT = Runtime.getRuntime().availableProcessors();
+	
+	/**
+	 * The upper limit for the maximum symbols dictionary count
+	 */
+	public static final int SYMBOLS_MAX_LENGTH = 256;
+	
+	/**
+	 * The upper limit for the maximum numbers dictionary count
+	 */
+	public static final int NUMBERS_MAX_LENGTH = 256;
+	
+	/**
+	 * The upper limit for the maximum lowercase characters dictionary count
+	 */
+	public static final int LOWERCASE_CHARACTERS_MAX_LENGTH = 256;
+	
+	/**
+	 * The upper limit for the maximum uppercase characters dictionary count
+	 */
+	public static final int UPPERCASE_CHARACTERS_MAX_LENGTH = 256;
+	
+	/**
+	 * The upper limit for the maximum ambigous characters dictionary count
+	 */
+	public static final int AMBIGOUS_CHARACTERS_MAX_LENGTH = 256;
+	
+	/**
+	 * The upper limit for the maximum similar characters dictionary count
+	 */
+	public static final int SIMILAR_CHARACTERS_MAX_LENGTH = 256;
+	
 	/**
 	 * Default exclude for similar characters
 	 */
-	public static final boolean DEFAULT_EXCLUDE_SIMILAR_CHARACTERS = true;
+	public static final boolean EXCLUDE_SIMILAR_CHARACTERS = true;
+
 	/**
 	 * Default exclude ambigous characters
 	 */
-	public static final boolean DEFAULT_EXCLUDE_AMBIGOUS_CHARACTERS = false;
-	/**
-	 * Default maximum running time (milliseconds)
-	 */
-	public static final int DEFAULT_MAX_RUNNING_TIME = 30_000;
-	/**
-	 * Default maximum results count
-	 */
-	public static final int DEFAULT_MAX_RESULTS_COUNT = 5;
-	/**
-	 * Default maximum threads count
-	 */
-	public static final int DEFAULT_MAX_THREADS_COUNT = 2;
+	public static final boolean EXCLUDE_AMBIGOUS_CHARACTERS = false;
+	
 	/**
 	 * Default symbol characters
 	 */
-	public static final String DEFAULT_SYMBOLS = "{~`!@#$%',^&*()-_+={[}]\\|:;'\",<.>/?}";
+	public static final String SYMBOLS = "{~`!@#$%',^&*()-_+={[}]\\|:;'\",<.>/?}";
+	
 	/**
 	 * Default number characters
 	 */
-	public static final String DEFAULT_NUMBERS = "0123456789";
+	public static final String NUMBERS = "0123456789";
+	
 	/**
 	 * Default lowercase characters
 	 */
-	public static final String DEFAULT_LOWERCASE_CHARACTERS = "qwertyuiopasdfghjklzxcvbnm";
+	public static final String LOWERCASE_CHARACTERS = "qwertyuiopasdfghjklzxcvbnm";
+	
 	/**
 	 * Default uppercase characters
 	 */
-	public static final String DEFAULT_UPPERCASE_CHARACTERS = "QWERTYUIOPASDFGHJKLZXCVBNM";
+	public static final String UPPERCASE_CHARACTERS = "QWERTYUIOPASDFGHJKLZXCVBNM";
+	
 	/**
 	 * Default similar characters
 	 */
-	public static final String DEFAULT_SIMILAR_CHARACTERS = "il1Lo0OE3";
+	public static final String SIMILAR_CHARACTERS = "il1Lo0OE3";
+	
 	/**
-	 * Default ambigous characters
+	 * Default ambigous characters	
 	 */
-	public static final String DEFAULT_AMBIGOUS_CHARACTERS = "{}[]()/\\,'\"`~,;:.<>";
-	/**
-	 * Maximum running time limit (milliseconds)
-	 */
-	public static final int MAX_RUNNING_TIME_LIMIT = 60_000;
-	/**
-	 * Maximum results limit
-	 */
-	public static final int MAX_RESULTS_LIMIT = 10;
-	/**
-	 * Maximum password length limit
-	 */
-	public static final int MAX_PASSWORD_LENGTH_LIMIT = 30;
-	/**
-	 * Minimum password length limit
-	 */
-	public static final int MIN_PASSWORD_LENGTH_LIMIT = 8;
+	public static final String AMBIGOUS_CHARACTERS = "{}[]()/\\,'\"`~,;:.<>";
 	
 	
 	/**
 	 * This field contains the current password length.
-	 * The initial value is set to {@link StrongPasswordOptions#DEFAULT_LENGTH}.
+	 * The initial value is set to {@link StrongPasswordOptions#PASSWORD_LENGTH}.
 	 */
-	protected int length = DEFAULT_LENGTH;
+	protected int passwordLength = PASSWORD_LENGTH;
+	
 	/**
 	 * This field contains the minimum symbols count.
-	 * The initial value is set to {@link StrongPasswordOptions#DEFAULT_MIN_SYMBOLS_COUNT}.
+	 * The initial value is set to {@link StrongPasswordOptions#MIN_SYMBOLS_COUNT}.
 	 */
-	protected int minSymbolsCount = DEFAULT_MIN_SYMBOLS_COUNT;
+	protected int minSymbolsCount = MIN_SYMBOLS_COUNT;
+	
 	/**
 	 * This field contains the minimum numbers count.
-	 * The initial value is set to {@link StrongPasswordOptions#DEFAULT_MIN_NUMBERS_COUNT}.
+	 * The initial value is set to {@link StrongPasswordOptions#MIN_NUMBERS_COUNT}.
 	 */
-	protected int minNumbersCount = DEFAULT_MIN_NUMBERS_COUNT;
+	protected int minNumbersCount = MIN_NUMBERS_COUNT;
+	
 	/**
 	 * This field contains the minimum lowercase characters count.
-	 * The initial value is set to {@link StrongPasswordOptions#DEFAULT_MIN_LOWERCASE_CHARACTERS_COUNT}.
+	 * The initial value is set to {@link StrongPasswordOptions#MIN_LOWERCASE_CHARACTERS_COUNT}.
 	 */
-	protected int minLowercaseCharactersCount = DEFAULT_MIN_LOWERCASE_CHARACTERS_COUNT;
+	protected int minLowercaseCharactersCount = MIN_LOWERCASE_CHARACTERS_COUNT;
+	
 	/**
 	 * This field contains the minimum uppercase characters count.
-	 * The initial value is set to {@link StrongPasswordOptions#DEFAULT_MIN_UPPERCASE_CHARACTERS_COUNT}.
+	 * The initial value is set to {@link StrongPasswordOptions#MIN_UPPERCASE_CHARACTERS_COUNT}.
 	 */
-	protected int minUppercaseCharactersCount = DEFAULT_MIN_UPPERCASE_CHARACTERS_COUNT;
+	protected int minUppercaseCharactersCount = MIN_UPPERCASE_CHARACTERS_COUNT;
+	
 	/**
 	 * This field contains the similar characters exclusion flag.
-	 * The initial value is set to {@link StrongPasswordOptions#DEFAULT_EXCLUDE_SIMILAR_CHARACTERS}.
+	 * The initial value is set to {@link StrongPasswordOptions#EXCLUDE_SIMILAR_CHARACTERS}.
 	 */
-	protected boolean excludeSimilarCharacters = DEFAULT_EXCLUDE_SIMILAR_CHARACTERS;
+	protected boolean excludeSimilarCharacters = EXCLUDE_SIMILAR_CHARACTERS;
+	
 	/**
 	 * This field contains the ambigous characters exclusion flag.
-	 * The initial value is set to {@link StrongPasswordOptions#DEFAULT_EXCLUDE_AMBIGOUS_CHARACTERS}.
+	 * The initial value is set to {@link StrongPasswordOptions#EXCLUDE_AMBIGOUS_CHARACTERS}.
 	 */
-	protected boolean excludeAmbigousCharacters = DEFAULT_EXCLUDE_AMBIGOUS_CHARACTERS;
+	protected boolean excludeAmbigousCharacters = EXCLUDE_AMBIGOUS_CHARACTERS;
+	
 	/**
 	 * This field contains the maximum running time in milliseconds.
-	 * The initial value is set to {@link StrongPasswordOptions#DEFAULT_MAX_RUNNING_TIME}.
+	 * The initial value is set to {@link StrongPasswordOptions#MAX_RUNNING_TIME}.
 	 */
-	protected int maxRunningTime = DEFAULT_MAX_RUNNING_TIME;
+	protected int maxRunningTime = MAX_RUNNING_TIME;
+	
 	/**
 	 * This field contains the maximum results count.
-	 * The initial value is set to {@link StrongPasswordOptions#DEFAULT_MAX_RESULTS_COUNT}.
+	 * The initial value is set to {@link StrongPasswordOptions#MAX_RESULTS_COUNT}.
 	 */
-	protected int maxResults = DEFAULT_MAX_RESULTS_COUNT;
+	protected int maxResultsCount = MAX_RESULTS_COUNT;
+	
 	/**
 	 * This field contains the threads count.
-	 * The initial value is set to {@link StrongPasswordOptions#DEFAULT_MAX_THREADS_COUNT}.
+	 * The initial value is set to {@link StrongPasswordOptions#MAX_THREADS_COUNT}.
 	 */
-	protected int maxThreadsCount = DEFAULT_MAX_THREADS_COUNT;
+	protected int maxThreadsCount = MAX_THREADS_COUNT;
+	
 	/**
 	 * This field contains the symbol characters to be used by the generator.
-	 * The initial value is set to {@link StrongPasswordOptions#DEFAULT_SYMBOLS}.
+	 * The initial value is set to {@link StrongPasswordOptions#SYMBOLS}.
 	 */
-	protected String symbols = DEFAULT_SYMBOLS;
+	protected String symbolCharacters = SYMBOLS;
+	
 	/**
 	 * This field contains the number characters to be used by the generator.
-	 * The initial value is set to {@link StrongPasswordOptions#DEFAULT_NUMBERS}.
+	 * The initial value is set to {@link StrongPasswordOptions#NUMBERS}.
 	 */
-	protected String numbers = DEFAULT_NUMBERS;
+	protected String numberCharacters = NUMBERS;
+	
 	/**
 	 * This field contains the lowercase characters to be used by the generator.
-	 * The initial value is set to {@link StrongPasswordOptions#DEFAULT_LOWERCASE_CHARACTERS}.
+	 * The initial value is set to {@link StrongPasswordOptions#LOWERCASE_CHARACTERS}.
 	 */
-	protected String lowercaseCharacters = DEFAULT_LOWERCASE_CHARACTERS;
+	protected String lowercaseCharacters = LOWERCASE_CHARACTERS;
+	
 	/**
 	 * This field contains the the uppercase characters to be used by the generator.
-	 * The initial value is set to {@link StrongPasswordOptions#DEFAULT_UPPERCASE_CHARACTERS}.
+	 * The initial value is set to {@link StrongPasswordOptions#UPPERCASE_CHARACTERS}.
 	 */
-	protected String uppercaseCharacters = DEFAULT_UPPERCASE_CHARACTERS;
+	protected String uppercaseCharacters = UPPERCASE_CHARACTERS;
+	
 	/**
 	 * This field contains the similar characters to be used by the generator.
-	 * The initial value is set to {@link StrongPasswordOptions#DEFAULT_SIMILAR_CHARACTERS}.
+	 * The initial value is set to {@link StrongPasswordOptions#SIMILAR_CHARACTERS}.
 	 */
-	protected String similarCharacters = DEFAULT_SIMILAR_CHARACTERS;
+	protected String similarCharacters = SIMILAR_CHARACTERS;
+	
 	/**
 	 * This field contains the ambigous characters to be used by the generator.
-	 * The initial value is set to {@link StrongPasswordOptions#DEFAULT_AMBIGOUS_CHARACTERS}.
+	 * The initial value is set to {@link StrongPasswordOptions#AMBIGOUS_CHARACTERS}.
 	 */
-	protected String ambigousCharacters = DEFAULT_AMBIGOUS_CHARACTERS;
+	protected String ambigousCharacters = AMBIGOUS_CHARACTERS;
 
 
 	/**
 	 * Sets the length of the password
 	 * @param length The length of the password
 	 */
-	public void setLength(int length) {
-		this.length = length;
+	public void setPasswordLength(Object length) {
+		
+		if (!(length instanceof Integer)) {
+			throw new StrongPasswordException(StrongPasswordException.PASSWORD_LENGTH_NOT_A_NUMBER,
+				"The length of the password is invalid");
+		}
+		
+		passwordLength = (int) length;
+		
+		if (passwordLength < 0) {
+			throw new StrongPasswordException(StrongPasswordException.PASSWORD_LENGTH_NEGATIVE,
+				"The length of the password is negative");
+		}
+		
+		if (passwordLength < PASSWORD_LENGTH_LOWER_LIMIT) {
+			throw new StrongPasswordException(StrongPasswordException.PASSWORD_LENGTH_BELOW_LOWER_LIMIT, 
+				String.format("The actual password length is below the minimum allowed length: actual=%d, minimum=%d", passwordLength, PASSWORD_LENGTH_LOWER_LIMIT));
+		}
+		
+		if (passwordLength > PASSWORD_LENGTH_UPPER_LIMIT) {
+			throw new StrongPasswordException(StrongPasswordException.PASSWORD_LENGTH_ABOVE_UPPER_LIMIT, 
+				String.format("The actual password length exceeds the maximum allowed length: actual=%d, minimum=%d", passwordLength, PASSWORD_LENGTH_UPPER_LIMIT));
+		}
 	}
 	
 	/**
 	 * Obtains the password length
 	 * @return The password length
 	 */
-	public int getLength() {
-		return length;
+	public int getPasswordLength() {
+		return passwordLength;
 	}
 
 	/**
 	 * Sets the minimum symbols count to use
 	 * @param count The minimum symbols count
 	 */
-	public void setMinSymbolsCount(int count) {
-		this.minSymbolsCount = count;
+	public void setMinSymbolsCount(Object count) {
+		
+		if (!(count instanceof Integer)) {
+			throw new StrongPasswordException(StrongPasswordException.MIN_SYMBOLS_COUNT_NOT_A_NUMBER, 
+				"The minimum symbols count is invalid");
+		}
+		
+		minSymbolsCount = (int) count;
+		
+		if (minSymbolsCount < 0) {
+			throw new StrongPasswordException(StrongPasswordException.MIN_SYMBOLS_COUNT_NEGATIVE,
+				"The minimum symbols count is negative");
+		}
+		
+		if (minSymbolsCount < MIN_SYMBOLS_COUNT_LOWER_LIMIT) {
+			throw new StrongPasswordException(StrongPasswordException.MIN_SYMBOLS_COUNT_BELOW_LOWER_LIMIT, 
+				String.format("The password should containt at least %d symols", MIN_SYMBOLS_COUNT_LOWER_LIMIT));
+		}
+				
+		if (minSymbolsCount == passwordLength) {
+			throw new StrongPasswordException(StrongPasswordException.MIN_SYMBOLS_COUNT_EQUALS_PASSWORD_LENGTH,
+				"A strong password cannot be composed only by symbols");
+		}
+		
+		
+		if (minSymbolsCount > passwordLength) {
+			throw new StrongPasswordException(StrongPasswordException.MIN_SYMBOLS_COUNT_EXCEEDS_PASSWORD_LENGTH, 
+				String.format("The symbols count exceeds the password length: count=%d, length=%d", minSymbolsCount, passwordLength));
+		}
 	}
 	
 	/**
@@ -210,15 +347,41 @@ public class StrongPasswordOptions {
 	 * @return <code>true</code> if the symbol characters should be used, <code>false</code> otherwise
 	 */
 	public boolean shouldUseSymbols() {
-		return minSymbolsCount > 0 && symbols != null && symbols.length() > 0;
+		return minSymbolsCount > 0 && symbolCharacters != null && !symbolCharacters.trim().isEmpty();
 	}
 	
 	/**
 	 * Sets the minimum numbers count
 	 * @param count The minimum numbers count
 	 */
-	public void setMinNumbersCount(int count) {
-		minNumbersCount = count;
+	public void setMinNumbersCount(Object count) {
+		
+		if (!(count instanceof Integer)) {
+			throw new StrongPasswordException(StrongPasswordException.MIN_NUMBERS_COUNT_NOT_A_NUMBER,
+				"The minimum numbers count is invalid");
+		}
+		
+		minNumbersCount = (int) count;
+		
+		if (minNumbersCount < 0) {
+			throw new StrongPasswordException(StrongPasswordException.MIN_NUMBERS_COUNT_NEGATIVE,
+				"The minimum numbers count is negative");
+		}
+				
+		if (minNumbersCount < MIN_NUMBERS_COUNT_LOWER_LIMIT) {
+			throw new StrongPasswordException(StrongPasswordException.MIN_NUMBERS_COUNT_BELOW_LOWER_LIMIT, 
+				String.format("The password should containt at least %d numbers", MIN_NUMBERS_COUNT_LOWER_LIMIT));
+		}
+		
+		if (minNumbersCount == passwordLength) {
+			throw new StrongPasswordException(StrongPasswordException.MIN_NUMBERS_COUNT_EQUALS_PASSWORD_LENGTH,
+				"A strong password cannot be composed only by numbers");
+		}
+		
+		if (minNumbersCount > passwordLength) {
+			throw new StrongPasswordException(StrongPasswordException.MIN_NUMBERS_COUNT_EXCEEDS_PASSWORD_LENGTH, 
+				String.format("The numbers count exceeds the password length: count=%d, length=%d", minNumbersCount, passwordLength));
+		}
 	}
 	
 	/**
@@ -234,15 +397,41 @@ public class StrongPasswordOptions {
 	 * @return <code>true</code> if the numbers should be used, <code>false</code> otherwise
 	 */
 	public boolean shouldUseNumbers() {
-		return minNumbersCount > 0 && numbers != null && numbers.length() > 0;
+		return minNumbersCount > 0 && numberCharacters != null && !numberCharacters.trim().isEmpty();
 	}
 
 	/**
 	 * Sets the minimum lowercase characters
 	 * @param count The minimum lowercase characters
 	 */
-	public void setMinLowercaseCharactersCount(int count) {
-		minLowercaseCharactersCount = count;
+	public void setMinLowercaseCharactersCount(Object count) {
+		
+		if (!(count instanceof Integer)) {
+			throw new StrongPasswordException(StrongPasswordException.MIN_LOWERCASE_CHARACTERS_COUNT_NOT_A_NUMBER,
+				"The minimum lowercase characters count is invalid");
+		}
+		
+		minLowercaseCharactersCount = (int) count;
+		
+		if (minLowercaseCharactersCount < 0) {
+			throw new StrongPasswordException(StrongPasswordException.MIN_LOWERCASE_CHARACTERS_NEGATIVE, 
+				"The minimum lowercase characters count is negative");
+		}
+		
+		if (minLowercaseCharactersCount < MIN_LOWERCASE_CHARACTERS_COUNT_LOWER_LIMIT) {
+			throw new StrongPasswordException(StrongPasswordException.MIN_LOWERCASE_CHARACTERS_BELOW_LOWER_LIMIT, 
+				String.format("The password should containt at least %d lowercase characters", MIN_LOWERCASE_CHARACTERS_COUNT_LOWER_LIMIT));
+		}
+
+		if (minLowercaseCharactersCount == passwordLength) {
+			throw new StrongPasswordException(StrongPasswordException.MIN_LOWERCASE_CHARACTERS_EQUALS_PASSWORD_LENGTH, 
+				"A strong password cannot be composed only by lowercase characters");
+		}
+		
+		if (minLowercaseCharactersCount > passwordLength) {
+			throw new StrongPasswordException(StrongPasswordException.MIN_LOWERCASE_CHARACTERS_EXCEEDS_PASSWORD_LENGTH, 
+				String.format("The lowercase characters count exceeds the password length: count=%d, length=%d", minNumbersCount, passwordLength));
+		}
 	}
 	
 	/**
@@ -258,15 +447,41 @@ public class StrongPasswordOptions {
 	 * @return <code>true</code> if the lowercase characters should be used, <code>false</code> otherwise
 	 */
 	public boolean shouldUseLowercaseCharacters() {
-		return minLowercaseCharactersCount > 0 && lowercaseCharacters != null && lowercaseCharacters.length() > 0;
+		return minLowercaseCharactersCount > 0 && lowercaseCharacters != null && !lowercaseCharacters.trim().isEmpty();
 	}
 	
 	/**
 	 * Sets the minimum characters count
 	 * @param count The minimum characters count
 	 */
-	public void setMinUppercaseCharactersCount(int count) {
-		minUppercaseCharactersCount = count;
+	public void setMinUppercaseCharactersCount(Object count) {
+		
+		if (!(count instanceof Integer)) {
+			throw new StrongPasswordException(StrongPasswordException.MIN_UPPERCASE_CHARACTERS_COUNT_NOT_A_NUMBER,
+				"The minimum uppercase characters count is invalid");
+		}
+		
+		minUppercaseCharactersCount = (int) count;
+		
+		if (minUppercaseCharactersCount < 0) {
+			throw new StrongPasswordException(StrongPasswordException.MIN_UPPERCASE_CHARACTERS_NEGATIVE, 
+				"The minimum uppercase characters count is negative");
+		}
+		
+		if (minUppercaseCharactersCount < MIN_UPPERCASE_CHARACTERS_COUNT_LOWER_LIMIT) {
+			throw new StrongPasswordException(StrongPasswordException.MIN_UPPERCASE_CHARACTERS_BELOW_LOWER_LIMIT, 
+				String.format("The password should containt at least %d uppercase characters", MIN_UPPERCASE_CHARACTERS_COUNT_LOWER_LIMIT));
+		}
+
+		if (minUppercaseCharactersCount == passwordLength) {
+			throw new StrongPasswordException(StrongPasswordException.MIN_UPPERCASE_CHARACTERS_EQUALS_PASSWORD_LENGTH, 
+				"A strong password cannot be composed only by uppercase characters");
+		}
+		
+		if (minUppercaseCharactersCount > passwordLength) {
+			throw new StrongPasswordException(StrongPasswordException.MIN_UPPERCASE_CHARACTERS_EXCEEDS_PASSWORD_LENGTH, 
+				String.format("The uppercase characters count exceeds the password length: count=%d, length=%d", minUppercaseCharactersCount, passwordLength));
+		}
 	}
 	
 	/**
@@ -282,38 +497,50 @@ public class StrongPasswordOptions {
 	 * @return <code>true</code> if the uppercase characters should be used, <code>false</code> otherwise
 	 */
 	public boolean shouldUseUppercaseCharacters() {
-		return minUppercaseCharactersCount > 0 && uppercaseCharacters != null && uppercaseCharacters.length() > 0;
+		return minUppercaseCharactersCount > 0 && uppercaseCharacters != null && !uppercaseCharacters.trim().isEmpty();
 	}
 	
 	/**
 	 * Set the flag that indicates if the similar characters should be excluded
 	 * @param exclude <code>True</code> to exclude similar characters, <code>false</code> otherwise
 	 */
-	public void setExcludeSimilarCharacters(boolean exclude) {
-		excludeSimilarCharacters = exclude;
+	public void setExcludeSimilarCharacters(Object exclude) {
+		
+		if (!(exclude instanceof Boolean)) {
+			throw new StrongPasswordException(StrongPasswordException.EXCLUDE_SIMILAR_CHARACTERS_FLAG_INVALID,
+				"The exclude similar characters flag is invalid");
+		}
+		
+		excludeSimilarCharacters = (boolean) exclude;
 	}
 	
 	/**
 	 * Obtains the similar characters
 	 * @return The similar characters
 	 */
-	public boolean excludeSimilarCharacters() {
+	public boolean shouldExcludeSimilarCharacters() {
 		return excludeSimilarCharacters;
 	}
 	
 	/**
 	 * Set the flag that indicates if the ambigous characters should be excluded
-	 * @param exclude <code>True</code> to exclude amibous characters, <code>false</code> otherwise
+	 * @param exclude <code>True</code> to exclude ambigous characters, <code>false</code> otherwise
 	 */
-	public void setExcludeAmbigousCharacters(boolean exclude) {
-		excludeAmbigousCharacters = exclude;
+	public void setExcludeAmbigousCharacters(Object exclude) {
+		
+		if (!(exclude instanceof Boolean)) {
+			throw new StrongPasswordException(StrongPasswordException.EXCLUDE_AMBIGOUS_CHARACTERS_FLAG_INVALID,
+				"The exclude ambigous characters flag is invalid");
+		}
+		
+		excludeAmbigousCharacters = (boolean) exclude;
 	}
 	
 	/**
 	 * Obtains the ambigous characters
 	 * @return The ambigous characters
 	 */
-	public boolean excludeAmbigousCharacters() {
+	public boolean shouldExcludeAmbigousCharacters() {
 		return excludeAmbigousCharacters;
 	}
 	
@@ -321,8 +548,29 @@ public class StrongPasswordOptions {
 	 * Obtains the maximum running time
 	 * @param time The maximum running time
 	 */
-	public void setMaxRunningTime(int time) {
-		maxRunningTime = time;
+	public void setMaxRunningTime(Object time) {
+		
+		if (!(time instanceof Integer)) {
+			throw new StrongPasswordException(StrongPasswordException.MAX_RUNNING_TIME_NOT_A_NUMBER,
+				"The maximum running time is invalid");
+		}
+		
+		maxRunningTime = (int) time;
+		
+		if (maxRunningTime < 0) {
+			throw new StrongPasswordException(StrongPasswordException.MAX_RUNNING_TIME_NEGATIVE, 
+				"The maximum running time is negative");
+		}
+		
+		if (maxRunningTime == 0) {
+			throw new StrongPasswordException(StrongPasswordException.MAX_RUNNING_TIME_ZERO, 
+				"The maximum running time cannot be equal to zero milliseconds");
+		}
+
+		if (maxRunningTime > MAX_RUNNING_TIME_UPPER_LIMIT) {
+			throw new StrongPasswordException(StrongPasswordException.MIN_UPPERCASE_CHARACTERS_EXCEEDS_PASSWORD_LENGTH, 
+				String.format("The maximum running time exceeds the maximum allowed value: actual=%d, max=%d", maxRunningTime, MAX_RUNNING_TIME_UPPER_LIMIT));
+		}
 	}
 	
 	/**
@@ -337,8 +585,29 @@ public class StrongPasswordOptions {
 	 * Obtains the maximum results 
 	 * @param count The maximum results
 	 */
-	public void setMaxResultsCount(int count) {
-		maxResults = count;
+	public void setMaxResultsCount(Object count) {
+		
+		if (!(count instanceof Integer)) {
+			throw new StrongPasswordException(StrongPasswordException.MAX_RESULTS_COUNT_NOT_A_NUMBER,
+				"The maximum results count is invalid");
+		}
+		
+		maxResultsCount = (int) count;
+		
+		if (maxResultsCount < 0) {
+			throw new StrongPasswordException(StrongPasswordException.MAX_RESULTS_COUNT_NEGATIVE, 
+				"The maximum results count is negative");
+		}
+		
+		if (maxResultsCount == 0) {
+			throw new StrongPasswordException(StrongPasswordException.MAX_RESULTS_COUNT_ZERO, 
+				"The maximum results count cannot be equal to zero");
+		}
+
+		if (maxResultsCount > MAX_RESULTS_COUNT_UPPER_LIMIT) {
+			throw new StrongPasswordException(StrongPasswordException.MAX_RESULTS_COUNT_EXCEEDS_UPPER_LIMIT, 
+				String.format("The maximum results count exceeds the maximum allowed value: actual=%d, max=%d", maxResultsCount, MAX_RESULTS_COUNT_UPPER_LIMIT));
+		}
 	}
 	
 	/**
@@ -346,7 +615,7 @@ public class StrongPasswordOptions {
 	 * @return The maximum results
 	 */
 	public int getMaxResultsCount() {
-		return maxResults;
+		return maxResultsCount;
 	}
 	
 	/**
@@ -361,8 +630,29 @@ public class StrongPasswordOptions {
 	 * Obtains the number of threads to use
 	 * @param count The number of threads
 	 */
-	public void setThreadsCount(int count) {
-		maxThreadsCount = count;
+	public void setThreadsCount(Object count) {
+		
+		if (!(count instanceof Integer)) {
+			throw new StrongPasswordException(StrongPasswordException.MAX_THREADS_COUNT_NOT_A_NUMBER,
+				"The maximum threads count is invalid");
+		}
+		
+		maxThreadsCount = (int) count;
+		
+		if (maxThreadsCount < 0) {
+			throw new StrongPasswordException(StrongPasswordException.MAX_THREADS_COUNT_NEGATIVE, 
+				"The maximum threads count is negative");
+		}
+		
+		if (maxThreadsCount == 0) {
+			throw new StrongPasswordException(StrongPasswordException.MAX_THREADS_COUNT_ZERO, 
+				"The maximum threads count cannot be equal to zero");
+		}
+
+		if (maxThreadsCount > MAX_THREADS_COUNT_UPPER_LIMIT) {
+			throw new StrongPasswordException(StrongPasswordException.MAX_RESULTS_COUNT_EXCEEDS_UPPER_LIMIT, 
+				String.format("The maximum threads count exceeds the maximum allowed value: actual=%d, max=%d", maxResultsCount, MAX_THREADS_COUNT_UPPER_LIMIT));
+		}
 	}
 	
 	/**
@@ -370,23 +660,61 @@ public class StrongPasswordOptions {
 	 * @return The sumbols used
 	 */
 	public String getSymbols() {
-		return symbols;
+		return symbolCharacters;
 	}
 
 	/**
 	 * Obtains the symbols used
 	 * @param symbols The sumbols to use use
 	 */
-	public void setSymbols(String symbols) {
-		this.symbols = symbols;
+	public void setSymbols(Object symbols) {
+		
+		if (!(symbols instanceof String)) {
+			throw new StrongPasswordException(StrongPasswordException.SYMBOLS_INVALID,
+				"The symbols to set are invalid");
+		}
+		
+		this.symbolCharacters = (String) symbols;
+		
+		if (this.symbolCharacters.trim().isEmpty()) {
+			throw new StrongPasswordException(StrongPasswordException.SYMBOLS_EMPTY, 
+				"The symbols to set are empty");
+		}
+		
+		if (this.symbolCharacters.trim().length() > SYMBOLS_MAX_LENGTH) {
+			throw new StrongPasswordException(StrongPasswordException.SYMBOLS_LENGTH_EXCEEDS_UPPER_LIMIT, 
+				String.format("The actual length of the symbols to set exceeds the maximum allowed: actual=%d, max=%d", 
+						this.symbolCharacters.trim().length(), SYMBOLS_MAX_LENGTH));
+		}
+		
+		validateMins();
 	}
 	
 	/**
 	 * Obtains the numbers 
 	 * @param numbers The numbers
 	 */
-	public void setNumbers(String numbers) {
-		this.numbers = numbers;
+	public void setNumbers(Object numbers) {
+		
+		if (!(numbers instanceof String)) {
+			throw new StrongPasswordException(StrongPasswordException.NUMBERS_INVALID,
+				"The numbers to set are invalid");
+		}
+		
+		this.numberCharacters = (String) numbers;
+		
+		if (this.numberCharacters.trim().isEmpty()) {
+			throw new StrongPasswordException(StrongPasswordException.NUMBERS_EMPTY, 
+				"The numbers to set are empty");
+		}
+		
+		if (this.numberCharacters.trim().length() > NUMBERS_MAX_LENGTH) {
+			throw new StrongPasswordException(StrongPasswordException.NUMBERS_LENGTH_EXCEEDS_UPPER_LIMIT, 
+				String.format("The actual length of the numbers to set exceeds the maximum allowed: actual=%d, max=%d", 
+						this.numberCharacters.trim().length(), NUMBERS_MAX_LENGTH));
+		}
+		
+		validateMins();
 	}
 	
 	/**
@@ -394,16 +722,34 @@ public class StrongPasswordOptions {
 	 * @return The numbers
 	 */
 	public String getNumbers() {
-		return numbers;
+		return numberCharacters;
 	}
-
 	
 	/**
 	 * Obtains the lowercase characters
 	 * @param chars The lowercase characters
 	 */
-	public void setLowercaseCharacters(String chars) {
-		lowercaseCharacters = chars;
+	public void setLowercaseCharacters(Object chars) {
+		
+		if (!(chars instanceof String)) {
+			throw new StrongPasswordException(StrongPasswordException.LOWERCASE_CHARACTERE_INVALID,
+				"The lowercase characters to set are invalid");
+		}
+		
+		lowercaseCharacters = (String) chars;
+		
+		if (lowercaseCharacters.trim().isEmpty()) {
+			throw new StrongPasswordException(StrongPasswordException.LOWERCASE_CHARACTERE_EMPTY, 
+				"The lowercase characters to set are empty");
+		}
+		
+		if (lowercaseCharacters.trim().length() > LOWERCASE_CHARACTERS_MAX_LENGTH) {
+			throw new StrongPasswordException(StrongPasswordException.LOWERCASE_CHARACTERE_EXCEEDS_UPPER_LIMIT, 
+				String.format("The actual length of the lowercase characters to set exceeds the maximum allowed: actual=%d, max=%d", 
+					lowercaseCharacters.trim().length(), LOWERCASE_CHARACTERS_MAX_LENGTH));
+		}
+		
+		validateMins();
 	}
 	
 	/**
@@ -418,8 +764,27 @@ public class StrongPasswordOptions {
 	 * Obtains the uppercare characters
 	 * @param chars The uppercase characters
 	 */
-	public void setUppercaseCharacters(String chars) {
-		uppercaseCharacters = chars;
+	public void setUppercaseCharacters(Object chars) {
+		
+		if (!(chars instanceof String)) {
+			throw new StrongPasswordException(StrongPasswordException.UPPERCASE_CHARACTERE_INVALID,
+				"The uppercase characters to set are invalid");
+		}
+		
+		uppercaseCharacters = (String) chars;
+		
+		if (uppercaseCharacters.trim().isEmpty()) {
+			throw new StrongPasswordException(StrongPasswordException.UPPERCASE_CHARACTERE_EMPTY, 
+				"The uppercase characters to set are empty");
+		}
+		
+		if (uppercaseCharacters.trim().length() > UPPERCASE_CHARACTERS_MAX_LENGTH) {
+			throw new StrongPasswordException(StrongPasswordException.UPPERCASE_CHARACTERE_EXCEEDS_UPPER_LIMIT, 
+				String.format("The actual length of the uppercase characters to set exceeds the maximum allowed: actual=%d, max=%d", 
+					uppercaseCharacters.trim().length(), UPPERCASE_CHARACTERS_MAX_LENGTH));
+		}
+		
+		validateMins();
 	}
 
 	/**
@@ -431,11 +796,28 @@ public class StrongPasswordOptions {
 	}
 	
 	/**
-	 * Obtinas the similar characters
+	 * Obtains the similar characters
 	 * @param chars The similar characters
 	 */
-	public void setSimilarCharacters(String chars) {
-		similarCharacters = chars;
+	public void setSimilarCharacters(Object chars) {
+		
+		if (!(chars instanceof String)) {
+			throw new StrongPasswordException(StrongPasswordException.SIMILAR_CHARACTERE_INVALID,
+				"The similar characters to set are invalid");
+		}
+		
+		similarCharacters = (String) chars;
+		
+		if (similarCharacters.trim().isEmpty()) {
+			throw new StrongPasswordException(StrongPasswordException.SIMILAR_CHARACTERE_EMPTY, 
+				"The similar characters to set are empty");
+		}
+		
+		if (similarCharacters.trim().length() > SIMILAR_CHARACTERS_MAX_LENGTH) {
+			throw new StrongPasswordException(StrongPasswordException.SIMILAR_CHARACTERE_EXCEEDS_UPPER_LIMIT, 
+				String.format("The actual length of the similar characters to set exceeds the maximum allowed: actual=%d, max=%d", 
+					similarCharacters.trim().length(), UPPERCASE_CHARACTERS_MAX_LENGTH));
+		}	
 	}
 
 	/**
@@ -450,8 +832,25 @@ public class StrongPasswordOptions {
 	 * Obtains the ambigous characters
 	 * @param chars The ambigous characters
 	 */
-	public void setAmbigousCharacters(String chars) {
-		ambigousCharacters = chars;
+	public void setAmbigousCharacters(Object chars) {
+		
+		if (!(chars instanceof String)) {
+			throw new StrongPasswordException(StrongPasswordException.AMBIGOUS_CHARACTERE_INVALID,
+				"The ambigous characters to set are invalid");
+		}
+		
+		ambigousCharacters = (String) chars;
+		
+		if (ambigousCharacters.trim().isEmpty()) {
+			throw new StrongPasswordException(StrongPasswordException.AMBIGOUS_CHARACTERE_EMPTY, 
+				"The ambigous characters to set are empty");
+		}
+		
+		if (ambigousCharacters.trim().length() > AMBIGOUS_CHARACTERS_MAX_LENGTH) {
+			throw new StrongPasswordException(StrongPasswordException.AMBIGOUS_CHARACTERE_EXCEEDS_UPPER_LIMIT, 
+				String.format("The actual length of the ambigous characters to set exceeds the maximum allowed: actual=%d, max=%d", 
+					ambigousCharacters.trim().length(), AMBIGOUS_CHARACTERS_MAX_LENGTH));
+		}		
 	}
 	
 	/**
@@ -462,139 +861,18 @@ public class StrongPasswordOptions {
 		return ambigousCharacters;
 	}
 
-	/**
-	 * Validates the current options
-	 */
-	public void validate() {
-		validateLength();
-		validateMinSymbols();
-		validateMinNumbers();
-		validateMinLowercaseCharacters();
-		validateMinUppercaseCharacters();
-		validateMaxRunningTime();
-		validateMaxResults();
-		validateMaxThreads();
-		validateMins();
-	}
-	
-	private void validateLength() {
-
-		if (length <= 0) {
-			throw new StrongPasswordException(StrongPasswordException.LENGTH_INVALID,
-					"The length of the password should be a positive number, greater than 0");
-		}
-
-		// a password with less than 8 characters is considered unsafe,
-		// so should not be used by default
-		if (length < MIN_PASSWORD_LENGTH_LIMIT) {
-			throw new StrongPasswordException(StrongPasswordException.LENGTH_TOO_SMALL, String
-					.format("The length of the password should not be below %d characters", MIN_PASSWORD_LENGTH_LIMIT));
-		}
-
-		// there is no obvious advantage (at this point) generating a password with more
-		// than 30 characters
-		// it will just take too much time without a guarantee that will even be
-		// generated
-		if (length > MAX_PASSWORD_LENGTH_LIMIT) {
-			throw new StrongPasswordException(StrongPasswordException.LENGTH_TOO_HIGH, String
-					.format("The length of the password should not exceed %d characters", MAX_PASSWORD_LENGTH_LIMIT));
-		}
-	}
-
-	private void validateMinSymbols() {
-		if (minSymbolsCount == length) {
-			throw new StrongPasswordException(StrongPasswordException.SYMBOLS_EQUAL_LENGTH,
-					"The password should not be composed only by symbols");
-		}
-		if (minSymbolsCount > length) {
-			throw new StrongPasswordException(StrongPasswordException.SYMBOLS_EXCEEDING_LENGTH,
-					"The symbols count should not exceed the length of the password");
-		}
-	}
-
-	private void validateMinNumbers() {
-		if (minNumbersCount == length) {
-			throw new StrongPasswordException(StrongPasswordException.NUMBERS_EQUAL_LENGTH,
-					"The password should not be composed only by numbers");
-		}
-		if (minNumbersCount > length) {
-			throw new StrongPasswordException(StrongPasswordException.NUMBERS_EXCEEDING_LENGTH,
-					"The numbers count should not exceed the length of the password");
-		}
-	}
-
-	private void validateMinLowercaseCharacters() {
-		if (minLowercaseCharactersCount == length) {
-			throw new StrongPasswordException(StrongPasswordException.LOWERCASE_CHARACTERS_EQUAL_LENGTH,
-					"The password should not be composed only by lowercase characters");
-		}
-		if (minLowercaseCharactersCount > length) {
-			throw new StrongPasswordException(StrongPasswordException.LOWERCASE_CHARACTERS_EXCEEDING_LENGTH,
-					"The lowercase characters count should not exceed the length of the password");
-		}
-	}
-
-	private void validateMinUppercaseCharacters() {
-		if (minUppercaseCharactersCount == length) {
-			throw new StrongPasswordException(StrongPasswordException.UPPERCASE_CHARACTERS_EQUAL_LENGTH,
-					"The password should not be composed only by uppercase characters");
-		}
-		if (minUppercaseCharactersCount > length) {
-			throw new StrongPasswordException(StrongPasswordException.UPPERCASE_CHARACTERS_EXCEEDING_LENGTH,
-					"The uppercase characters count should not exceed the length of the password");
-		}
-	}
-
-	private void validateMaxRunningTime() {
-		if (maxRunningTime <= 0) {
-			throw new StrongPasswordException(StrongPasswordException.MAX_RUNNING_TIME_INVALID,
-					"The maximum running time should be a positive number, greater than 0");
-		}
-		if (maxRunningTime > MAX_RUNNING_TIME_LIMIT) {
-			throw new StrongPasswordException(StrongPasswordException.MAX_RUNNING_TIME_TOO_HIGH,
-					String.format("The maximum running time should not exceed %d ms", MAX_RUNNING_TIME_LIMIT));
-		}
-	}
-
-	private void validateMaxResults() {
-		if (maxResults <= 0) {
-			throw new StrongPasswordException(StrongPasswordException.MAX_RESULTS_INVALID,
-					"The maximum results should be a positive number, greater than 0");
-		}
-		if (maxResults > MAX_RESULTS_LIMIT) {
-			throw new StrongPasswordException(StrongPasswordException.MAX_RESULTS_TOO_HIGH,
-					String.format("The maximum results count should not exceed %d entries", MAX_RESULTS_LIMIT));
-		}
-	}
-
-	private void validateMaxThreads() {
-		if (maxThreadsCount <= 0) {
-			throw new StrongPasswordException(StrongPasswordException.MAX_THREADS_INVALID,
-					"the maximum threads count should a positive number, greater than 0");
-		}
-		int availableThreads = Runtime.getRuntime().availableProcessors();
-		if (maxThreadsCount > availableThreads) {
-			throw new StrongPasswordException(StrongPasswordException.MAX_THREADS_TOO_HIGHT,
-					String.format("The maximum threads count should not exceed %d", availableThreads));
-		}
-	}
 	
 	private void validateMins() {
 		
 		int realLength =
-				(shouldUseSymbols() ? minSymbolsCount : 0) +
-				(shouldUseNumbers() ? minNumbersCount : 0) + 
-				(shouldUseLowercaseCharacters() ? minLowercaseCharactersCount : 0) + 
-				(shouldUseUppercaseCharacters() ? minUppercaseCharactersCount : 0);
+			(shouldUseSymbols() ? minSymbolsCount : 0) +
+			(shouldUseNumbers() ? minNumbersCount : 0) + 
+			(shouldUseLowercaseCharacters() ? minLowercaseCharactersCount : 0) + 
+			(shouldUseUppercaseCharacters() ? minUppercaseCharactersCount : 0);
 		
-		if (realLength == 0) {
-			throw new StrongPasswordException(StrongPasswordException.EXPECTED_LENGTH_IS_ZERO, 
-				"None of the generated passwords will be valid since the actual length will be equal to 0 (zero) since no dictionary is to be used.");
-		}
-		
-		if (realLength > length) {
+		if (realLength > passwordLength) {
 			throw new StrongPasswordException(StrongPasswordException.EXPECTED_MIN_LENGTH_GREATER_REQUIRED_LENGTH, 
-				String.format("The expected minimum length of the password resulting from combining dictionaries exceeds the password length: actual length=%d, required length=%d", realLength, length));
+				String.format("The expected minimum length of the password resulting from combining dictionaries exceeds the password length: actual length=%d, required length=%d", realLength, passwordLength));
 		}
 	}
 }

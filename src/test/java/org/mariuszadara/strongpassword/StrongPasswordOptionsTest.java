@@ -4,6 +4,9 @@ import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.nio.file.Files;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -12,6 +15,7 @@ import org.junit.runner.notification.RunListener.ThreadSafe;
 import org.junit.runners.JUnit4;
 import org.mariuszadara.strongpassword.api.StrongPasswordException;
 import org.mariuszadara.strongpassword.api.StrongPasswordFileOptions;
+import org.mariuszadara.strongpassword.api.StrongPasswordMapOptions;
 import org.mariuszadara.strongpassword.api.StrongPasswordOptions;
 
 @RunWith(JUnit4.class)
@@ -19,455 +23,830 @@ import org.mariuszadara.strongpassword.api.StrongPasswordOptions;
 public class StrongPasswordOptionsTest {
 
 	@Test
-	public void testValidateLengthNegative() {
-
+	public void testSetPasswordLengthNull() throws Exception {
 		StrongPasswordOptions options = new StrongPasswordOptions();
-		options.setLength(-1);
-
 		try {
-			options.validate();
-			fail("Negative length not validated");
-		} catch (StrongPasswordException e) {
-			Assert.assertEquals(StrongPasswordException.LENGTH_INVALID, e.getCode());
+			options.setPasswordLength(null);
+			Assert.fail("Null not handled");
+		}
+		catch (StrongPasswordException e) {
+			Assert.assertEquals(StrongPasswordException.PASSWORD_LENGTH_NOT_A_NUMBER, e.getCode());
 		}
 	}
 
 	@Test
-	public void testValidateLengthZero() {
-
+	public void testSetPasswordLengthNegative() throws Exception {
 		StrongPasswordOptions options = new StrongPasswordOptions();
-		options.setLength(0);
-
 		try {
-			options.validate();
-			fail("Zero length not validated");
-		} catch (StrongPasswordException e) {
-			Assert.assertEquals(StrongPasswordException.LENGTH_INVALID, e.getCode());
+			options.setPasswordLength(-1);
+			Assert.fail("Negative value not handled");
+		}
+		catch (StrongPasswordException e) {
+			Assert.assertEquals(StrongPasswordException.PASSWORD_LENGTH_NEGATIVE, e.getCode());
+		}
+	}
+	
+	@Test
+	public void testSetPasswordLengthBelowLowerLimit() throws Exception {
+		StrongPasswordOptions options = new StrongPasswordOptions();
+		try {
+			options.setPasswordLength(3);
+			Assert.fail("Value below lower limit not handled");
+		}
+		catch (StrongPasswordException e) {
+			Assert.assertEquals(StrongPasswordException.PASSWORD_LENGTH_BELOW_LOWER_LIMIT, e.getCode());
+		}
+	}
+	
+	@Test
+	public void testSetPasswordLengthAboveUpperLimit() throws Exception {
+		StrongPasswordOptions options = new StrongPasswordOptions();
+		try {
+			options.setPasswordLength(50);
+			Assert.fail("Value above upper limit not handled");
+		}
+		catch (StrongPasswordException e) {
+			Assert.assertEquals(StrongPasswordException.PASSWORD_LENGTH_ABOVE_UPPER_LIMIT, e.getCode());
+		}
+	}
+	
+	@Test
+	public void testGetPasswordLength() {
+		StrongPasswordOptions options = new StrongPasswordOptions();
+		options.setPasswordLength(23);
+		Assert.assertEquals(23, options.getPasswordLength());
+	}
+	
+	@Test
+	public void testSetMinSymbolsCountNull() throws Exception {
+		StrongPasswordOptions options = new StrongPasswordOptions();
+		try {
+			options.setMinSymbolsCount(null);
+			Assert.fail("Null not handled");
+		}
+		catch (StrongPasswordException e) {
+			Assert.assertEquals(StrongPasswordException.MIN_SYMBOLS_COUNT_NOT_A_NUMBER, e.getCode());
 		}
 	}
 
 	@Test
-	public void testValidateLengthBelowMin() {
-
+	public void testSetMinSymbolsCountNegative() throws Exception {
 		StrongPasswordOptions options = new StrongPasswordOptions();
-		options.setLength(3);
-		
 		try {
-			options.validate();
-			fail("Length below minimum not validated");
-		} catch (StrongPasswordException e) {
-			Assert.assertEquals(StrongPasswordException.LENGTH_TOO_SMALL, e.getCode());
+			options.setMinSymbolsCount(-1);
+			Assert.fail("Negative value not handled");
+		}
+		catch (StrongPasswordException e) {
+			Assert.assertEquals(StrongPasswordException.MIN_SYMBOLS_COUNT_NEGATIVE, e.getCode());
+		}
+	}
+	
+	@Test
+	public void testSetMinSymbolsCountBelowLowerLimit() throws Exception {
+		StrongPasswordOptions options = new StrongPasswordOptions();
+		try {
+			options.setMinSymbolsCount(1);
+			Assert.fail("Value below lower limit not handled");
+		}
+		catch (StrongPasswordException e) {
+			Assert.assertEquals(StrongPasswordException.MIN_SYMBOLS_COUNT_BELOW_LOWER_LIMIT, e.getCode());
+		}
+	}
+	
+	@Test
+	public void testSetMinSymbolsCountEqualsPasswordLength() throws Exception {
+		StrongPasswordOptions options = new StrongPasswordOptions();
+		try {
+			options.setMinSymbolsCount(options.getPasswordLength());
+			Assert.fail("Value equal to password length not handled");
+		}
+		catch (StrongPasswordException e) {
+			Assert.assertEquals(StrongPasswordException.MIN_SYMBOLS_COUNT_EQUALS_PASSWORD_LENGTH, e.getCode());
+		}
+	}
+	
+	@Test
+	public void testSetMinSymbolsCountOverPasswordLength() throws Exception {
+		StrongPasswordOptions options = new StrongPasswordOptions();
+		try {
+			options.setMinSymbolsCount(options.getPasswordLength() + 1);
+			Assert.fail("Value above the password length not handled");
+		}
+		catch (StrongPasswordException e) {
+			Assert.assertEquals(StrongPasswordException.MIN_SYMBOLS_COUNT_EXCEEDS_PASSWORD_LENGTH, e.getCode());
+		}
+	}
+		
+	@Test
+	public void testGetMinSymbolsCount() {
+		StrongPasswordOptions options = new StrongPasswordOptions();
+		options.setMinSymbolsCount(3);
+		Assert.assertEquals(3, options.getMinSymbolsCount());
+	}
+	
+	@Test
+	public void testSetMinNumbersCountNull() throws Exception {
+		StrongPasswordOptions options = new StrongPasswordOptions();
+		try {
+			options.setMinNumbersCount(null);
+			Assert.fail("Null not handled");
+		}
+		catch (StrongPasswordException e) {
+			Assert.assertEquals(StrongPasswordException.MIN_NUMBERS_COUNT_NOT_A_NUMBER, e.getCode());
 		}
 	}
 
 	@Test
-	public void testValidateLengthAboveMax() {
+	public void testSetMinNumbersCountNegative() throws Exception {
+		StrongPasswordOptions options = new StrongPasswordOptions();
+		try {
+			options.setMinNumbersCount(-1);
+			Assert.fail("Negative value not handled");
+		}
+		catch (StrongPasswordException e) {
+			Assert.assertEquals(StrongPasswordException.MIN_NUMBERS_COUNT_NEGATIVE, e.getCode());
+		}
+	}
+	
+	@Test
+	public void testSetMinNumbersCountBelowLowerLimit() throws Exception {
+		StrongPasswordOptions options = new StrongPasswordOptions();
+		try {
+			options.setMinNumbersCount(1);
+			Assert.fail("Value below lower limit not handled");
+		}
+		catch (StrongPasswordException e) {
+			Assert.assertEquals(StrongPasswordException.MIN_NUMBERS_COUNT_BELOW_LOWER_LIMIT, e.getCode());
+		}
+	}
+	
+	@Test
+	public void testSetMinNumbersCountEqualsPasswordLength() throws Exception {
+		StrongPasswordOptions options = new StrongPasswordOptions();
+		try {
+			options.setMinNumbersCount(options.getPasswordLength());
+			Assert.fail("Value equal to password length not handled");
+		}
+		catch (StrongPasswordException e) {
+			Assert.assertEquals(StrongPasswordException.MIN_NUMBERS_COUNT_EQUALS_PASSWORD_LENGTH, e.getCode());
+		}
+	}
+	
+	@Test
+	public void testSetMinNumbersCountOverPasswordLength() throws Exception {
+		StrongPasswordOptions options = new StrongPasswordOptions();
+		try {
+			options.setMinNumbersCount(options.getPasswordLength() + 1);
+			Assert.fail("Value above the password length not handled");
+		}
+		catch (StrongPasswordException e) {
+			Assert.assertEquals(StrongPasswordException.MIN_NUMBERS_COUNT_EXCEEDS_PASSWORD_LENGTH, e.getCode());
+		}
+	}
+		
+	@Test
+	public void testGetMinNumbersCount() {
+		StrongPasswordOptions options = new StrongPasswordOptions();
+		options.setMinNumbersCount(3);
+		Assert.assertEquals(3, options.getMinNumbersCount());
+	}
+	
+	@Test
+	public void testMinLowercaseCharactersCountNull() throws Exception {
+		StrongPasswordOptions options = new StrongPasswordOptions();
+		try {
+			options.setMinLowercaseCharactersCount(null);
+			Assert.fail("Null not handled");
+		}
+		catch (StrongPasswordException e) {
+			Assert.assertEquals(StrongPasswordException.MIN_LOWERCASE_CHARACTERS_COUNT_NOT_A_NUMBER, e.getCode());
+		}
+	}
 
+	@Test
+	public void testSetMinLowercaseCharactersCountNegative() throws Exception {
 		StrongPasswordOptions options = new StrongPasswordOptions();
-		options.setLength(50);
+		try {
+			options.setMinLowercaseCharactersCount(-1);
+			Assert.fail("Negative value not handled");
+		}
+		catch (StrongPasswordException e) {
+			Assert.assertEquals(StrongPasswordException.MIN_LOWERCASE_CHARACTERS_NEGATIVE, e.getCode());
+		}
+	}
+	
+	@Test
+	public void testSetMinLowercaseCharactersCountBelowLowerLimit() throws Exception {
+		StrongPasswordOptions options = new StrongPasswordOptions();
+		try {
+			options.setMinLowercaseCharactersCount(1);
+			Assert.fail("Value below lower limit not handled");
+		}
+		catch (StrongPasswordException e) {
+			Assert.assertEquals(StrongPasswordException.MIN_LOWERCASE_CHARACTERS_BELOW_LOWER_LIMIT, e.getCode());
+		}
+	}
+	
+	@Test
+	public void testSetMinLowercaseCharactersCountEqualsPasswordLength() throws Exception {
+		StrongPasswordOptions options = new StrongPasswordOptions();
+		try {
+			options.setMinLowercaseCharactersCount(options.getPasswordLength());
+			Assert.fail("Value equal to password length not handled");
+		}
+		catch (StrongPasswordException e) {
+			Assert.assertEquals(StrongPasswordException.MIN_LOWERCASE_CHARACTERS_EQUALS_PASSWORD_LENGTH, e.getCode());
+		}
+	}
+	
+	@Test
+	public void testSetMinLowercaseCharactersCountOverPasswordLength() throws Exception {
+		StrongPasswordOptions options = new StrongPasswordOptions();
+		try {
+			options.setMinLowercaseCharactersCount(options.getPasswordLength() + 1);
+			Assert.fail("Value above the password length not handled");
+		}
+		catch (StrongPasswordException e) {
+			Assert.assertEquals(StrongPasswordException.MIN_LOWERCASE_CHARACTERS_EXCEEDS_PASSWORD_LENGTH, e.getCode());
+		}
+	}
+		
+	@Test
+	public void testGetMinLowercaseCharactersCount() {
+		StrongPasswordOptions options = new StrongPasswordOptions();
+		options.setMinLowercaseCharactersCount(3);
+		Assert.assertEquals(3, options.getMinLowercaseCharactersCount());
+	}
+	
+	@Test
+	public void testSetExcludeSimilarCharactersNull() {
+		StrongPasswordOptions options = new StrongPasswordOptions();
+		try {
+			options.setExcludeSimilarCharacters(null);
+			Assert.fail("Null value not handled");
+		}
+		catch (StrongPasswordException e) {
+			Assert.assertEquals(StrongPasswordException.EXCLUDE_SIMILAR_CHARACTERS_FLAG_INVALID, e.getCode());
+		}		
+	}
+	
+	@Test
+	public void testSetExcludeSimilarCharactersInvalid() {
+		StrongPasswordOptions options = new StrongPasswordOptions();
+		try {
+			options.setExcludeSimilarCharacters(3);
+			Assert.fail("Invalid value not handled");
+		}
+		catch (StrongPasswordException e) {
+			Assert.assertEquals(StrongPasswordException.EXCLUDE_SIMILAR_CHARACTERS_FLAG_INVALID, e.getCode());
+		}		
+	}
+	
+	@Test
+	public void testGetExcludeSimilarCharacters() {
+		StrongPasswordOptions options = new StrongPasswordOptions();
+		options.setExcludeSimilarCharacters(true);
+		Assert.assertTrue(options.shouldExcludeSimilarCharacters());
+	}
+	
+	@Test
+	public void testSetExcludeAmbigousCharactersInvalid() {
+		StrongPasswordOptions options = new StrongPasswordOptions();
+		try {
+			options.setExcludeAmbigousCharacters(3);
+			Assert.fail("Invalid value not handled");
+		}
+		catch (StrongPasswordException e) {
+			Assert.assertEquals(StrongPasswordException.EXCLUDE_AMBIGOUS_CHARACTERS_FLAG_INVALID, e.getCode());
+		}		
+	}
+	
+	@Test
+	public void testGetExcludeAmbigousCharacters() {
+		StrongPasswordOptions options = new StrongPasswordOptions();
+		options.setExcludeAmbigousCharacters(true);
+		Assert.assertTrue(options.shouldExcludeAmbigousCharacters());
+	}
+	
+	@Test
+	public void testMaxResultsCountNull() {
+		StrongPasswordOptions options = new StrongPasswordOptions();
+		try {
+			options.setMaxResultsCount(null);
+			Assert.fail("Null value not handled");
+		}
+		catch (StrongPasswordException e) {
+			Assert.assertEquals(StrongPasswordException.MAX_RESULTS_COUNT_NOT_A_NUMBER, e.getCode());
+		}
+	}
 
+	@Test
+	public void testMaxResultsCountNegative() {
+		StrongPasswordOptions options = new StrongPasswordOptions();
 		try {
-			options.validate();
-			fail("Length above maximum not validated");
-		} catch (StrongPasswordException e) {
-			Assert.assertEquals(StrongPasswordException.LENGTH_TOO_HIGH, e.getCode());
+			options.setMaxResultsCount(-1);
+			Assert.fail("Negative value not handled");
+		}
+		catch (StrongPasswordException e) {
+			Assert.assertEquals(StrongPasswordException.MAX_RESULTS_COUNT_NEGATIVE, e.getCode());
 		}
 	}
 	
 	@Test
-	public void testValidateSymbolsEqualLength() {
+	public void testMaxResultsCountZero() {
 		StrongPasswordOptions options = new StrongPasswordOptions();
-		options.setLength(10);
-		options.setMinSymbolsCount(10);
+		try {
+			options.setMaxResultsCount(0);
+			Assert.fail("Zero value not handled");
+		}
+		catch (StrongPasswordException e) {
+			Assert.assertEquals(StrongPasswordException.MAX_RESULTS_COUNT_ZERO, e.getCode());
+		}
+	}
+	
+	@Test
+	public void testMaxResultsOverLimit() {
+		StrongPasswordOptions options = new StrongPasswordOptions();
+		try {
+			options.setMaxResultsCount(20);
+			Assert.fail("Value above max limit not handled");
+		}
+		catch (StrongPasswordException e) {
+			Assert.assertEquals(StrongPasswordException.MAX_RESULTS_COUNT_EXCEEDS_UPPER_LIMIT, e.getCode());
+		}
+	}
+	
+	@Test
+	public void testGetMaxResults() {
+		StrongPasswordOptions options = new StrongPasswordOptions();
+		options.setMaxResultsCount(5);
+		Assert.assertEquals(5, options.getMaxResultsCount());
+	}
+	
+	@Test
+	public void testSetThreadsCountNull() {
+		StrongPasswordOptions options = new StrongPasswordOptions();
+		try {
+			options.setThreadsCount(null);
+			Assert.fail("Null value not handled");
+		}
+		catch (StrongPasswordException e) {
+			Assert.assertEquals(StrongPasswordException.MAX_THREADS_COUNT_NOT_A_NUMBER, e.getCode());
+		}
+	}
 
+	@Test
+	public void testSetThreadsCountNegative() {
+		StrongPasswordOptions options = new StrongPasswordOptions();
 		try {
-			options.validate();
-			fail("Minimum symbols count not validated");
-		} catch (StrongPasswordException e) {
-			Assert.assertEquals(StrongPasswordException.SYMBOLS_EQUAL_LENGTH, e.getCode());
+			options.setThreadsCount(-1);
+			Assert.fail("Negative value not handled");
+		}
+		catch (StrongPasswordException e) {
+			Assert.assertEquals(StrongPasswordException.MAX_THREADS_COUNT_NEGATIVE, e.getCode());
 		}
 	}
 	
 	@Test
-	public void testValidateSymbolsExceedingLength() {
+	public void testSetThreadsCountZero() {
 		StrongPasswordOptions options = new StrongPasswordOptions();
-		options.setLength(10);
-		options.setMinSymbolsCount(11);
-		
 		try {
-			options.validate();
-			fail("Exceeding symbols count not validated");
-		} catch (StrongPasswordException e) {
-			Assert.assertEquals(StrongPasswordException.SYMBOLS_EXCEEDING_LENGTH, e.getCode());
+			options.setThreadsCount(0);
+			Assert.fail("Zero value not handled");
+		}
+		catch (StrongPasswordException e) {
+			Assert.assertEquals(StrongPasswordException.MAX_THREADS_COUNT_ZERO, e.getCode());
 		}
 	}
 	
 	@Test
-	public void testValidateNumbersEqualLength() {
+	public void testSetThreadsCountOverLimit() {
 		StrongPasswordOptions options = new StrongPasswordOptions();
-		options.setLength(10);
-		options.setMinNumbersCount(10);
-		
 		try {
-			options.validate();
-			fail("Minimum numbers count not validated");
-		} catch (StrongPasswordException e) {
-			Assert.assertEquals(StrongPasswordException.NUMBERS_EQUAL_LENGTH, e.getCode());
+			options.setThreadsCount(20);
+			Assert.fail("Value above max limit not handled");
+		}
+		catch (StrongPasswordException e) {
+			Assert.assertEquals(StrongPasswordException.MAX_RESULTS_COUNT_EXCEEDS_UPPER_LIMIT, e.getCode());
 		}
 	}
 	
 	@Test
-	public void testValidateNumbersExceedingLength() {
+	public void testGetThreadsCount() {
 		StrongPasswordOptions options = new StrongPasswordOptions();
-		options.setLength(10);
-		options.setMinNumbersCount(11);
-		
+		options.setThreadsCount(2);
+		Assert.assertEquals(2, options.getThreadsCount());
+	}
+	
+	@Test
+	public void testSetSymbolsNull() {
+		StrongPasswordOptions options = new StrongPasswordOptions();
 		try {
-			options.validate();
-			fail("Exceeding numbers count not validated");
-		} catch (StrongPasswordException e) {
-			Assert.assertEquals(StrongPasswordException.NUMBERS_EXCEEDING_LENGTH, e.getCode());
+			options.setSymbols(null);
+			Assert.fail("Null value not handled");
+		}
+		catch (StrongPasswordException e) {
+			Assert.assertEquals(StrongPasswordException.SYMBOLS_INVALID, e.getCode());
+		}
+	}
+
+	@Test
+	public void testSetSymbolsEmpty1() {
+		StrongPasswordOptions options = new StrongPasswordOptions();
+		try {
+			options.setSymbols("");
+			Assert.fail("Empty value not handled");
+		}
+		catch (StrongPasswordException e) {
+			Assert.assertEquals(StrongPasswordException.SYMBOLS_EMPTY, e.getCode());
 		}
 	}
 	
 	@Test
-	public void testValidateLowercaseCharactersEqualLength() {
+	public void testSetSymbolsEmpty2() {
 		StrongPasswordOptions options = new StrongPasswordOptions();
-		options.setLength(10);
-		options.setMinLowercaseCharactersCount(10);
-		
 		try {
-			options.validate();
-			fail("Minimum lowercase characters count not validated");
-		} catch (StrongPasswordException e) {
-			Assert.assertEquals(StrongPasswordException.LOWERCASE_CHARACTERS_EQUAL_LENGTH, e.getCode());
+			options.setSymbols(" ");
+			Assert.fail("Empty value not handled");
+		}
+		catch (StrongPasswordException e) {
+			Assert.assertEquals(StrongPasswordException.SYMBOLS_EMPTY, e.getCode());
 		}
 	}
 	
 	@Test
-	public void testValidateLowercaseCharactersExceedingLength() {
+	public void testSetSymbolsLengthOverUpperLimit() {
 		StrongPasswordOptions options = new StrongPasswordOptions();
-		options.setLength(10);
-		options.setMinLowercaseCharactersCount(11);
-		
 		try {
-			options.validate();
-			fail("Minimum lowercase characters count not validated");
-		} catch (StrongPasswordException e) {
-			Assert.assertEquals(StrongPasswordException.LOWERCASE_CHARACTERS_EXCEEDING_LENGTH, e.getCode());
+			char[] chars = new char[300];
+			Arrays.fill(chars, 'x');
+			options.setSymbols(new String(chars));
+			Assert.fail("Value not handled");
+		}
+		catch (StrongPasswordException e) {
+			Assert.assertEquals(StrongPasswordException.SYMBOLS_LENGTH_EXCEEDS_UPPER_LIMIT, e.getCode());
 		}
 	}
 	
 	@Test
-	public void testValidateUppercaseCharactersEqualLength() {
+	public void testGetSymbols() {
 		StrongPasswordOptions options = new StrongPasswordOptions();
-		options.setLength(10);
-		options.setMinUppercaseCharactersCount(10);
-		
+		options.setSymbols("test");
+		Assert.assertEquals("test", options.getSymbols());
+	}
+
+	@Test
+	public void testSetNumbersNull() {
+		StrongPasswordOptions options = new StrongPasswordOptions();
 		try {
-			options.validate();
-			fail("Minimum uppercase characters count not validated");
-		} catch (StrongPasswordException e) {
-			Assert.assertEquals(StrongPasswordException.UPPERCASE_CHARACTERS_EQUAL_LENGTH, e.getCode());
+			options.setNumbers(null);
+			Assert.fail("Null value not handled");
+		}
+		catch (StrongPasswordException e) {
+			Assert.assertEquals(StrongPasswordException.NUMBERS_INVALID, e.getCode());
+		}
+	}
+
+	@Test
+	public void testSetNumbersEmpty1() {
+		StrongPasswordOptions options = new StrongPasswordOptions();
+		try {
+			options.setNumbers("");
+			Assert.fail("Empty value not handled");
+		}
+		catch (StrongPasswordException e) {
+			Assert.assertEquals(StrongPasswordException.NUMBERS_EMPTY, e.getCode());
 		}
 	}
 	
 	@Test
-	public void testValidateUppercaseCharactersExceedingLength() {
+	public void testSetNumbersEmpty2() {
 		StrongPasswordOptions options = new StrongPasswordOptions();
-		options.setLength(10);
-		options.setMinUppercaseCharactersCount(11);
-		
 		try {
-			options.validate();
-			fail("Minimum uppercase characters count not validated");
-		} catch (StrongPasswordException e) {
-			Assert.assertEquals(StrongPasswordException.UPPERCASE_CHARACTERS_EXCEEDING_LENGTH, e.getCode());
+			options.setNumbers(" ");
+			Assert.fail("Empty value not handled");
+		}
+		catch (StrongPasswordException e) {
+			Assert.assertEquals(StrongPasswordException.NUMBERS_EMPTY, e.getCode());
 		}
 	}
 	
 	@Test
-	public void testValidateMaxRunningTimeNegative() {
+	public void testSetNumbersLengthOverUpperLimit() {
 		StrongPasswordOptions options = new StrongPasswordOptions();
-		options.setMaxRunningTime(-1);
-		
 		try {
-			options.validate();
-			fail("Negative maximum running time not validated");
-		} catch (StrongPasswordException e) {
-			Assert.assertEquals(StrongPasswordException.MAX_RUNNING_TIME_INVALID, e.getCode());
+			char[] chars = new char[300];
+			Arrays.fill(chars, 'x');
+			options.setNumbers(new String(chars));
+			Assert.fail("Value not handled");
+		}
+		catch (StrongPasswordException e) {
+			Assert.assertEquals(StrongPasswordException.NUMBERS_LENGTH_EXCEEDS_UPPER_LIMIT, e.getCode());
+		}
+	}
+
+	@Test
+	public void testGetNumbers() {
+		StrongPasswordOptions options = new StrongPasswordOptions();
+		options.setNumbers("test");
+		Assert.assertEquals("test", options.getNumbers());
+	}
+
+	@Test
+	public void testSetLowercaseCharactersNull() {
+		StrongPasswordOptions options = new StrongPasswordOptions();
+		try {
+			options.setLowercaseCharacters(null);
+			Assert.fail("Null value not handled");
+		}
+		catch (StrongPasswordException e) {
+			Assert.assertEquals(StrongPasswordException.LOWERCASE_CHARACTERE_INVALID, e.getCode());
+		}
+	}
+
+	@Test
+	public void testSetLowercaseCharactersEmpty1() {
+		StrongPasswordOptions options = new StrongPasswordOptions();
+		try {
+			options.setLowercaseCharacters("");
+			Assert.fail("Empty value not handled");
+		}
+		catch (StrongPasswordException e) {
+			Assert.assertEquals(StrongPasswordException.LOWERCASE_CHARACTERE_EMPTY, e.getCode());
 		}
 	}
 	
 	@Test
-	public void testValidateMaxRunningTimeZero() {
+	public void testSetLowercaseCharactersEmpty2() {
 		StrongPasswordOptions options = new StrongPasswordOptions();
-		options.setMaxRunningTime(0);
-		
 		try {
-			options.validate();
-			fail("Zerp maximum running time not validated");
-		} catch (StrongPasswordException e) {
-			Assert.assertEquals(StrongPasswordException.MAX_RUNNING_TIME_INVALID, e.getCode());
+			options.setLowercaseCharacters(" ");
+			Assert.fail("Empty value not handled");
+		}
+		catch (StrongPasswordException e) {
+			Assert.assertEquals(StrongPasswordException.LOWERCASE_CHARACTERE_EMPTY, e.getCode());
 		}
 	}
 	
 	@Test
-	public void testValidateMaxRunningTimeTooHigh() {
+	public void testSetLowercaseCharactersLengthOverUpperLimit() {
 		StrongPasswordOptions options = new StrongPasswordOptions();
-		options.setMaxRunningTime(StrongPasswordOptions.MAX_RUNNING_TIME_LIMIT + 1);
-		
 		try {
-			options.validate();
-			fail("Exceeding maximum running time not validated");
-		} catch (StrongPasswordException e) {
-			Assert.assertEquals(StrongPasswordException.MAX_RUNNING_TIME_TOO_HIGH, e.getCode());
+			char[] chars = new char[300];
+			Arrays.fill(chars, 'x');
+			options.setLowercaseCharacters(new String(chars));
+			Assert.fail("Value not handled");
+		}
+		catch (StrongPasswordException e) {
+			Assert.assertEquals(StrongPasswordException.LOWERCASE_CHARACTERE_EXCEEDS_UPPER_LIMIT, e.getCode());
+		}
+	}
+
+	@Test
+	public void testGetLowercaseCharacters() {
+		StrongPasswordOptions options = new StrongPasswordOptions();
+		options.setLowercaseCharacters("test");
+		Assert.assertEquals("test", options.getLowercaseCharacters());
+	}
+	
+	@Test
+	public void testSetUppercaseCharactersNull() {
+		StrongPasswordOptions options = new StrongPasswordOptions();
+		try {
+			options.setUppercaseCharacters(null);
+			Assert.fail("Null value not handled");
+		}
+		catch (StrongPasswordException e) {
+			Assert.assertEquals(StrongPasswordException.UPPERCASE_CHARACTERE_INVALID, e.getCode());
+		}
+	}
+
+	@Test
+	public void testSetUppercaseCharactersEmpty1() {
+		StrongPasswordOptions options = new StrongPasswordOptions();
+		try {
+			options.setUppercaseCharacters("");
+			Assert.fail("Empty value not handled");
+		}
+		catch (StrongPasswordException e) {
+			Assert.assertEquals(StrongPasswordException.UPPERCASE_CHARACTERE_EMPTY, e.getCode());
 		}
 	}
 	
 	@Test
-	public void testValidateMaxResultsNegative() {
+	public void testSetUppercaseCharactersEmpty2() {
 		StrongPasswordOptions options = new StrongPasswordOptions();
-		options.setMaxResultsCount(-1);
-		
 		try {
-			options.validate();
-			fail("Negative max results not validated");
-		} catch (StrongPasswordException e) {
-			Assert.assertEquals(StrongPasswordException.MAX_RESULTS_INVALID, e.getCode());
+			options.setUppercaseCharacters(" ");
+			Assert.fail("Empty value not handled");
+		}
+		catch (StrongPasswordException e) {
+			Assert.assertEquals(StrongPasswordException.UPPERCASE_CHARACTERE_EMPTY, e.getCode());
 		}
 	}
 	
 	@Test
-	public void testValidateMaxResultsZero() {
+	public void testSetUppercaseCharactersLengthOverUpperLimit() {
 		StrongPasswordOptions options = new StrongPasswordOptions();
-		options.setMaxResultsCount(0);
-		
 		try {
-			options.validate();
-			fail("Zero max results not validated");
-		} catch (StrongPasswordException e) {
-			Assert.assertEquals(StrongPasswordException.MAX_RESULTS_INVALID, e.getCode());
+			char[] chars = new char[300];
+			Arrays.fill(chars, 'x');
+			options.setUppercaseCharacters(new String(chars));
+			Assert.fail("Value not handled");
+		}
+		catch (StrongPasswordException e) {
+			Assert.assertEquals(StrongPasswordException.UPPERCASE_CHARACTERE_EXCEEDS_UPPER_LIMIT, e.getCode());
+		}
+	}
+
+	@Test
+	public void testGetUppercaseCharacters() {
+		StrongPasswordOptions options = new StrongPasswordOptions();
+		options.setUppercaseCharacters("test");
+		Assert.assertEquals("test", options.getUppercaseCharacters());
+	}
+	
+	@Test
+	public void testSetSimilarCharactersNull() {
+		StrongPasswordOptions options = new StrongPasswordOptions();
+		try {
+			options.setSimilarCharacters(null);
+			Assert.fail("Null value not handled");
+		}
+		catch (StrongPasswordException e) {
+			Assert.assertEquals(StrongPasswordException.SIMILAR_CHARACTERE_INVALID, e.getCode());
+		}
+	}
+
+	@Test
+	public void testSetSimilarCharactersEmpty1() {
+		StrongPasswordOptions options = new StrongPasswordOptions();
+		try {
+			options.setSimilarCharacters("");
+			Assert.fail("Empty value not handled");
+		}
+		catch (StrongPasswordException e) {
+			Assert.assertEquals(StrongPasswordException.SIMILAR_CHARACTERE_EMPTY, e.getCode());
 		}
 	}
 	
 	@Test
-	public void testValidateMaxResultsExceedingLimit() {
+	public void testSetSimilarCharactersEmpty2() {
 		StrongPasswordOptions options = new StrongPasswordOptions();
-		options.setMaxResultsCount(StrongPasswordOptions.MAX_RESULTS_LIMIT + 1);
-		
 		try {
-			options.validate();
-			fail("Exceeding max results not validated");
-		} catch (StrongPasswordException e) {
-			Assert.assertEquals(StrongPasswordException.MAX_RESULTS_TOO_HIGH, e.getCode());
+			options.setSimilarCharacters(" ");
+			Assert.fail("Empty value not handled");
+		}
+		catch (StrongPasswordException e) {
+			Assert.assertEquals(StrongPasswordException.SIMILAR_CHARACTERE_EMPTY, e.getCode());
 		}
 	}
 	
 	@Test
-	public void testValidateMaxThreadsNegative() {
+	public void testSetSimilarCharactersLengthOverUpperLimit() {
 		StrongPasswordOptions options = new StrongPasswordOptions();
-		options.setThreadsCount(-1);
-		
 		try {
-			options.validate();
-			fail("Negative max threads not validated");
-		} catch (StrongPasswordException e) {
-			Assert.assertEquals(StrongPasswordException.MAX_THREADS_INVALID, e.getCode());
+			char[] chars = new char[300];
+			Arrays.fill(chars, 'x');
+			options.setSimilarCharacters(new String(chars));
+			Assert.fail("Value not handled");
+		}
+		catch (StrongPasswordException e) {
+			Assert.assertEquals(StrongPasswordException.SIMILAR_CHARACTERE_EXCEEDS_UPPER_LIMIT, e.getCode());
+		}
+	}
+
+	@Test
+	public void testGetSimilarCharacters() {
+		StrongPasswordOptions options = new StrongPasswordOptions();
+		options.setSimilarCharacters("test");
+		Assert.assertEquals("test", options.getSimilarCharacters());
+	}
+	
+	@Test
+	public void testSetAmbigousCharactersNull() {
+		StrongPasswordOptions options = new StrongPasswordOptions();
+		try {
+			options.setAmbigousCharacters(null);
+			Assert.fail("Null value not handled");
+		}
+		catch (StrongPasswordException e) {
+			Assert.assertEquals(StrongPasswordException.AMBIGOUS_CHARACTERE_INVALID, e.getCode());
+		}
+	}
+
+	@Test
+	public void testSetAmbigousCharactersEmpty1() {
+		StrongPasswordOptions options = new StrongPasswordOptions();
+		try {
+			options.setAmbigousCharacters("");
+			Assert.fail("Empty value not handled");
+		}
+		catch (StrongPasswordException e) {
+			Assert.assertEquals(StrongPasswordException.AMBIGOUS_CHARACTERE_EMPTY, e.getCode());
 		}
 	}
 	
 	@Test
-	public void testValidateMaxThreadsZero() {
+	public void testSetAmbigousCharactersEmpty2() {
 		StrongPasswordOptions options = new StrongPasswordOptions();
-		options.setThreadsCount(0);
-		
 		try {
-			options.validate();
-			fail("Zero max threads not validated");
-		} catch (StrongPasswordException e) {
-			Assert.assertEquals(StrongPasswordException.MAX_THREADS_INVALID, e.getCode());
+			options.setAmbigousCharacters(" ");
+			Assert.fail("Empty value not handled");
+		}
+		catch (StrongPasswordException e) {
+			Assert.assertEquals(StrongPasswordException.AMBIGOUS_CHARACTERE_EMPTY, e.getCode());
 		}
 	}
 	
 	@Test
-	public void testValidateMaxThreadsExceeding() {
+	public void testSetAmbigousCharactersLengthOverUpperLimit() {
 		StrongPasswordOptions options = new StrongPasswordOptions();
-		options.setThreadsCount(999);
-		
 		try {
-			options.validate();
-			fail("Exceeding max threads not validated");
-		} catch (StrongPasswordException e) {
-			Assert.assertEquals(StrongPasswordException.MAX_THREADS_TOO_HIGHT, e.getCode());
+			char[] chars = new char[300];
+			Arrays.fill(chars, 'x');
+			options.setAmbigousCharacters(new String(chars));
+			Assert.fail("Value not handled");
+		}
+		catch (StrongPasswordException e) {
+			Assert.assertEquals(StrongPasswordException.AMBIGOUS_CHARACTERE_EXCEEDS_UPPER_LIMIT, e.getCode());
+		}
+	}
+
+	@Test
+	public void testGetAmbigousCharacters() {
+		StrongPasswordOptions options = new StrongPasswordOptions();
+		options.setAmbigousCharacters("test");
+		Assert.assertEquals("test", options.getAmbigousCharacters());
+	}	
+	
+	@Test
+	public void testMinUppercaseCharactersCountNull() throws Exception {
+		StrongPasswordOptions options = new StrongPasswordOptions();
+		try {
+			options.setMinUppercaseCharactersCount(null);
+			Assert.fail("Null not handled");
+		}
+		catch (StrongPasswordException e) {
+			Assert.assertEquals(StrongPasswordException.MIN_UPPERCASE_CHARACTERS_COUNT_NOT_A_NUMBER, e.getCode());
+		}
+	}
+
+	@Test
+	public void testSetMinUppercaseCharactersCountNegative() throws Exception {
+		StrongPasswordOptions options = new StrongPasswordOptions();
+		try {
+			options.setMinUppercaseCharactersCount(-1);
+			Assert.fail("Negative value not handled");
+		}
+		catch (StrongPasswordException e) {
+			Assert.assertEquals(StrongPasswordException.MIN_UPPERCASE_CHARACTERS_NEGATIVE, e.getCode());
 		}
 	}
 	
 	@Test
-	public void testBindLength() {
-		
-		int expected = 1;
+	public void testSetMinUppercaseCharactersCountBelowLowerLimit() throws Exception {
 		StrongPasswordOptions options = new StrongPasswordOptions();
-		options.setLength(expected);
-		
-		Assert.assertEquals("Length not bound correctly", expected, options.getLength());
+		try {
+			options.setMinUppercaseCharactersCount(1);
+			Assert.fail("Value below lower limit not handled");
+		}
+		catch (StrongPasswordException e) {
+			Assert.assertEquals(StrongPasswordException.MIN_UPPERCASE_CHARACTERS_BELOW_LOWER_LIMIT, e.getCode());
+		}
 	}
 	
 	@Test
-	public void testBindMinSymbols() {
-		
-		int expected = 1;
+	public void testSetMinUppercaseCharactersCountEqualsPasswordLength() throws Exception {
 		StrongPasswordOptions options = new StrongPasswordOptions();
-		options.setMinSymbolsCount(expected);
-		
-		Assert.assertEquals("Min symbols not bound correctly", expected, options.getMinSymbolsCount());
+		try {
+			options.setMinUppercaseCharactersCount(options.getPasswordLength());
+			Assert.fail("Value equal to password length not handled");
+		}
+		catch (StrongPasswordException e) {
+			Assert.assertEquals(StrongPasswordException.MIN_UPPERCASE_CHARACTERS_EQUALS_PASSWORD_LENGTH, e.getCode());
+		}
 	}
 	
 	@Test
-	public void testBindMinNumbers() {
-		
-		int expected = 1;
+	public void testSetMinUppercaseCharactersCountOverPasswordLength() throws Exception {
 		StrongPasswordOptions options = new StrongPasswordOptions();
-		options.setMinNumbersCount(expected);
-		
-		Assert.assertEquals("Min numbers not bound correctly", expected, options.getMinNumbersCount());
+		try {
+			options.setMinUppercaseCharactersCount(options.getPasswordLength() + 1);
+			Assert.fail("Value above the password length not handled");
+		}
+		catch (StrongPasswordException e) {
+			Assert.assertEquals(StrongPasswordException.MIN_UPPERCASE_CHARACTERS_EXCEEDS_PASSWORD_LENGTH, e.getCode());
+		}
 	}
-	
-	@Test
-	public void testBindMinLowercaseCharacters() {
 		
-		int expected = 1;
+	@Test
+	public void testGetMinUppercaseCharactersCount() {
 		StrongPasswordOptions options = new StrongPasswordOptions();
-		options.setMinLowercaseCharactersCount(expected);
-		
-		Assert.assertEquals("Min lowercase characters not bound correctly", expected, options.getMinLowercaseCharactersCount());
+		options.setMinUppercaseCharactersCount(3);
+		Assert.assertEquals(3, options.getMinUppercaseCharactersCount());
 	}
-	
-	@Test
-	public void testBindMinUppercaseCharacters() {
-		
-		final int expected = 1;
-		StrongPasswordOptions options = new StrongPasswordOptions();
-		options.setMinUppercaseCharactersCount(expected);
-		
-		Assert.assertEquals("Min lowercase characters not bound correctly", expected, options.getMinUppercaseCharactersCount());
-	}
-	
-	@Test
-	public void testBindExcludeSimilarCharacters() {
-		
-		boolean expected = true;
-		StrongPasswordOptions options = new StrongPasswordOptions();
-		options.setExcludeSimilarCharacters(expected);;
-		
-		Assert.assertEquals("Exclude similar characters not bound correctly", expected, options.excludeSimilarCharacters());
-	}
-	
-	@Test
-	public void testBindExcludeAmbigousCharacters() {
-		
-		boolean expected = true;
-		StrongPasswordOptions options = new StrongPasswordOptions();
-		options.setExcludeAmbigousCharacters(expected);
-		
-		Assert.assertEquals("Exclude ambigous characters not bound correctly", expected, options.excludeAmbigousCharacters());
-	}
-	
-	@Test
-	public void testBindMaxRunningTime() {
-		
-		int expected = 1;
-		StrongPasswordOptions options = new StrongPasswordOptions();
-		options.setMaxRunningTime(expected);
-		
-		Assert.assertEquals("Max running time not bound correctly", expected, options.getMaxRunningTime());
-	}
-	
-	@Test
-	public void testBindMaxResults() {
-		
-		int expected = 1;
-		StrongPasswordOptions options = new StrongPasswordOptions();
-		options.setMaxResultsCount(expected);
-		
-		Assert.assertEquals("Max results not bound correctly", expected, options.getMaxResultsCount());
-	}
-	
-	@Test
-	public void testBindThreadsCount() {
-		
-		int expected = 1;
-		StrongPasswordOptions options = new StrongPasswordOptions();
-		options.setThreadsCount(expected);
-		
-		Assert.assertEquals("Max threads count not bound correctly", expected, options.getThreadsCount());
-	}
-	
-	@Test
-	public void testBindSymbols() {
-		
-		var expected = "test";
-		StrongPasswordOptions options = new StrongPasswordOptions();
-		options.setSymbols(expected);
-		
-		Assert.assertEquals("Symbols not bound correctly", expected, options.getSymbols());
-	}
-	
-	@Test
-	public void testBindNumbers() {
-		
-		var expected = "test";
-		StrongPasswordOptions options = new StrongPasswordOptions();
-		options.setNumbers(expected);
-		
-		Assert.assertEquals("Numbers not bound correctly", expected, options.getNumbers());
-	}
-	
-	@Test
-	public void testBindLowercaseCharacters() {
-		
-		var expected = "test";
-		StrongPasswordOptions options = new StrongPasswordOptions();
-		options.setLowercaseCharacters(expected);
-		
-		Assert.assertEquals("Lowercase characters not bound correctly", expected, options.getLowercaseCharacters());
-	}
-	
-	@Test
-	public void testBindUppercaseCharacters() {
-		
-		String expected = "test";;
-		StrongPasswordOptions options = new StrongPasswordOptions();
-		options.setUppercaseCharacters(expected);
-		
-		Assert.assertEquals("Uppercase characters not bound correctly", expected, options.getUppercaseCharacters());
-	}
-	
-	@Test
-	public void testBindSimilarCharacters() {
-		
-		String expected = "test";
-		StrongPasswordOptions options = new StrongPasswordOptions();
-		options.setSimilarCharacters(expected);
-		
-		Assert.assertEquals("Similar characters not bound correctly", expected, options.getSimilarCharacters());
-	}
-	
-	@Test
-	public void testBindAmbigousCharacters() {
-		
-		String expected = "test";  
-		StrongPasswordOptions options = new StrongPasswordOptions();
-		options.setAmbigousCharacters(expected);
-		
-		Assert.assertEquals("Ambigous characters not bound correctly", expected, options.getAmbigousCharacters());
-	}
-	
-	@Test
-	public void testDefaultOptionsAreValid() {
-		new StrongPasswordOptions().validate();
-	}
-	
+
 	@Test
 	public void testFileOptionsInvalidFile() {
 		try {
@@ -506,5 +885,134 @@ public class StrongPasswordOptionsTest {
 				tempFolder.deleteOnExit();
 			}
 		}
+	}
+	
+	@Test
+	public void testSetPasswordLengthMap() {
+		Map<String, Object> map = new HashMap<>();
+		map.put(StrongPasswordMapOptions.PASSWORD_LENGTH_KEY, 23);
+		StrongPasswordMapOptions options = new StrongPasswordMapOptions(map);
+		Assert.assertEquals(23, options.getPasswordLength());
+	}
+	
+	
+	@Test
+	public void testSetMinSymbolsCountMap() {
+		Map<String, Object> map = new HashMap<>();
+		map.put(StrongPasswordMapOptions.MIN_SYMBOLS_COUNT_KEY, 3);
+		StrongPasswordMapOptions options = new StrongPasswordMapOptions(map);
+		Assert.assertEquals(3, options.getMinSymbolsCount());
+	}
+	
+	@Test
+	public void testSetMinNumbersCountMap() {
+		Map<String, Object> map = new HashMap<>();
+		map.put(StrongPasswordMapOptions.MIN_NUMBERS_COUNT_KEY, 3);
+		StrongPasswordMapOptions options = new StrongPasswordMapOptions(map);
+		Assert.assertEquals(3, options.getMinNumbersCount());
+	}
+	
+	@Test
+	public void testSetMinLowercaseCharactersCountMap() {
+		Map<String, Object> map = new HashMap<>();
+		map.put(StrongPasswordMapOptions.MIN_LOWERCASE_CHARACTERS_COUNT_KEY, 3);
+		StrongPasswordMapOptions options = new StrongPasswordMapOptions(map);
+		Assert.assertEquals(3, options.getMinLowercaseCharactersCount());
+	}
+	
+	@Test
+	public void testSetMinUppercaseCharactersCountMap() {
+		Map<String, Object> map = new HashMap<>();
+		map.put(StrongPasswordMapOptions.MIN_UPPERCASE_CHARACTERS_COUNT_KEY, 3);
+		StrongPasswordMapOptions options = new StrongPasswordMapOptions(map);
+		Assert.assertEquals(3, options.getMinUppercaseCharactersCount());
+	}
+
+	@Test
+	public void testSetExcludeSimilarCharactersMap() {
+		Map<String, Object> map = new HashMap<>();
+		map.put(StrongPasswordMapOptions.EXCLUDE_SIMILAR_CHARACTERS_KEY, true);
+		StrongPasswordMapOptions options = new StrongPasswordMapOptions(map);
+		Assert.assertTrue(options.shouldExcludeSimilarCharacters());
+	}
+	
+	@Test
+	public void testSetExcludeAmbigousCharactersMap() {
+		Map<String, Object> map = new HashMap<>();
+		map.put(StrongPasswordMapOptions.EXCLUDE_AMBIGOUS_CHARACTERS_KEY, true);
+		StrongPasswordMapOptions options = new StrongPasswordMapOptions(map);
+		Assert.assertTrue(options.shouldExcludeAmbigousCharacters());
+	}
+	
+	@Test
+	public void testSetMaxRunningTimeMap() {
+		Map<String, Object> map = new HashMap<>();
+		map.put(StrongPasswordMapOptions.MAX_RUNNING_TIME_KEY, 15_000);
+		StrongPasswordMapOptions options = new StrongPasswordMapOptions(map);
+		Assert.assertEquals(15_000, options.getMaxRunningTime());
+	}
+	
+	@Test
+	public void testSetMaxResultsCountMap() {
+		Map<String, Object> map = new HashMap<>();
+		map.put(StrongPasswordMapOptions.MAX_RESULTS_KEY, 3);
+		StrongPasswordMapOptions options = new StrongPasswordMapOptions(map);
+		Assert.assertEquals(3, options.getMaxResultsCount());
+	}
+	
+	@Test
+	public void testSetThreadsCountMap() {
+		Map<String, Object> map = new HashMap<>();
+		map.put(StrongPasswordMapOptions.THREADS_COUNT_KEY, 1);
+		StrongPasswordMapOptions options = new StrongPasswordMapOptions(map);
+		Assert.assertEquals(1, options.getThreadsCount());
+	}
+	
+	@Test
+	public void testSetSymbolsMap() {
+		Map<String, Object> map = new HashMap<>();
+		map.put(StrongPasswordMapOptions.SYMBOLS_KEY, "test");
+		StrongPasswordMapOptions options = new StrongPasswordMapOptions(map);
+		Assert.assertEquals("test", options.getSymbols());
+	}
+	
+	@Test
+	public void testSetNumbersMap() {
+		Map<String, Object> map = new HashMap<>();
+		map.put(StrongPasswordMapOptions.NUMBERS_KEY, "1234");
+		StrongPasswordMapOptions options = new StrongPasswordMapOptions(map);
+		Assert.assertEquals("1234", options.getNumbers());
+	}
+	
+	@Test
+	public void testSetLowercaseCharactersMap() {
+		Map<String, Object> map = new HashMap<>();
+		map.put(StrongPasswordMapOptions.LOWERCASE_CHARACTERS_KEY, "test");
+		StrongPasswordMapOptions options = new StrongPasswordMapOptions(map);
+		Assert.assertEquals("test", options.getLowercaseCharacters());
+	}
+	
+	@Test
+	public void testSetUppercaseCharactersMap() {
+		Map<String, Object> map = new HashMap<>();
+		map.put(StrongPasswordMapOptions.UPPERCASE_CHARACTERS_KEY, "TEST");
+		StrongPasswordMapOptions options = new StrongPasswordMapOptions(map);
+		Assert.assertEquals("TEST", options.getUppercaseCharacters());
+	}
+
+	@Test
+	public void testSetSimilarCharactersMap() {
+		Map<String, Object> map = new HashMap<>();
+		map.put(StrongPasswordMapOptions.SIMILAR_CHARACTERS_KEY, "test");
+		StrongPasswordMapOptions options = new StrongPasswordMapOptions(map);
+		Assert.assertEquals("test", options.getSimilarCharacters());
+	}
+	
+	@Test
+	public void testSetAmbigousCharactersMap() {
+		Map<String, Object> map = new HashMap<>();
+		map.put(StrongPasswordMapOptions.AMBIGOUS_CHARACTERS_KEY, "test");
+		StrongPasswordMapOptions options = new StrongPasswordMapOptions(map);
+		Assert.assertEquals("test", options.getAmbigousCharacters());
 	}
 }

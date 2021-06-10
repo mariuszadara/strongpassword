@@ -9,10 +9,8 @@ public class StrongPasswordEstimatorImpl implements StrongPasswordEstimator {
 	@Override
 	public double estimateDecodeTime(StrongPasswordOptions options, String password) {
 		
-		options.validate();
-
 		if (password == null || password.trim().isEmpty()) {
-			throw new StrongPasswordException(StrongPasswordException.PASSWORD_TO_VALIDATE_IS_INVALID, "The provided password is invalid");
+			throw new StrongPasswordException(StrongPasswordException.PASSWORD_TO_ESTIMATE_IS_INVALID, "The provided password is invalid");
 		}
 		
 		var allSymbols = options.getSymbols();

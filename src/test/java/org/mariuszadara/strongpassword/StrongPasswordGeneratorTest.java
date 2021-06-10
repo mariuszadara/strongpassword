@@ -28,14 +28,13 @@ public class StrongPasswordGeneratorTest {
 		var passwords = generator.generatePasswords(new StrongPasswordOptions());
 		Assert.assertNotNull(passwords);
 		Assert.assertFalse(passwords.isEmpty());
-		Assert.assertFalse(passwords.size() > StrongPasswordOptions.DEFAULT_MAX_RESULTS_COUNT);
 	}
 	
 	
 	@Test(expected = StrongPasswordException.class)
 	public void testGenerateFailIsOptionsInvalid() throws Exception {
 		StrongPasswordOptions invalidOptions = new StrongPasswordOptions();
-		invalidOptions.setLength(-1);
+		invalidOptions.setPasswordLength(-1);
 		generator.generatePasswords(invalidOptions);
 	}
 }

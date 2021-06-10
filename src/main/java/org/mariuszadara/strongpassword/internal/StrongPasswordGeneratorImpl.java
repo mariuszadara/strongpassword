@@ -76,8 +76,6 @@ public class StrongPasswordGeneratorImpl implements StrongPasswordGenerator, Str
 	@Override
 	public List<String> generatePasswords(StrongPasswordOptions options) {
 
-		options.validate();
-		
 		init(options);
 		var validatorThreads = spawnValidatorThreads(options);
 		
@@ -108,10 +106,6 @@ public class StrongPasswordGeneratorImpl implements StrongPasswordGenerator, Str
 		if (validatedEntries.size() > maxResults) {
 			validatedEntries = validatedEntries.subList(0, maxResults);
 		}
-
-		while (validatedEntries.size() > maxResults) {
-			validatedEntries.remove(validatedEntries.size() - 1);
-		}
 		
 		return validatedEntries;
 	}
@@ -124,7 +118,7 @@ public class StrongPasswordGeneratorImpl implements StrongPasswordGenerator, Str
 	
 	private void init(StrongPasswordOptions options) {
 
-		passwordLength = options.getLength();
+		passwordLength = options.getPasswordLength();
 		maxResults = options.getMaxResultsCount();
 		maxRunningTime = options.getMaxRunningTime();
 

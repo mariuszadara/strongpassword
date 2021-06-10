@@ -12,8 +12,6 @@ public class StrongPasswordScorerImpl implements StrongPasswordScorer {
 			return 0;
 		}
 		
-		options.validate();
-		
 		// this implementation is based on the criteria shown at http://www.passwordmeter.com/
 
 		var lowercaseCharactersCount = count(data, options.getLowercaseCharacters());

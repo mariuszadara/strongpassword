@@ -28,26 +28,29 @@ public class StrongPasswordFileOptions extends StrongPasswordMapOptions {
 
 	private void loadFromFile(File file) {
 		validateFile(file);
-		var map = extractFromFileAsMap(file);
-		loadFromMap(map);
+		loadFromOptions(extractOptionsFromFile(file));
 	}
 	
 	private void validateFile(File file) {
 		if (file == null) {
-			throw new StrongPasswordException(StrongPasswordException.OPTIONS_FILE_NOT_SPECIFIED, "The file has not been specified");
+			throw new StrongPasswordException(StrongPasswordException.OPTIONS_FILE_NOT_SPECIFIED,
+				"The file has not been specified");
 		}
 		if (!file.exists()) {
-			throw new StrongPasswordException(StrongPasswordException.OPTIONS_FILE_NOT_FOUND, String.format("The file does not exists: %s", file));
+			throw new StrongPasswordException(StrongPasswordException.OPTIONS_FILE_NOT_FOUND,
+				String.format("The file does not exists: %s", file));
 		}
 		if (!file.isFile()) {
-			throw new StrongPasswordException(StrongPasswordException.OPTIONS_FILE_NOT_REGULAR_FILE, String.format("Invalid file: %s", file));
+			throw new StrongPasswordException(StrongPasswordException.OPTIONS_FILE_NOT_REGULAR_FILE,
+				String.format("Invalid file: %s", file));
 		}
 		if (!file.canRead()) {
-			throw new StrongPasswordException(StrongPasswordException.OPTIONS_FILE_NOT_READABLE, String.format("Unreadable file: %s", file));
+			throw new StrongPasswordException(StrongPasswordException.OPTIONS_FILE_NOT_READABLE,
+				String.format("Unreadable file: %s", file));
 		}
 	}
 	
-	private Map<String, Object> extractFromFileAsMap(File file) {
+	private Map<String, Object> extractOptionsFromFile(File file) {
 
 		if (file.length() == 0) {
 			return Collections.emptyMap();

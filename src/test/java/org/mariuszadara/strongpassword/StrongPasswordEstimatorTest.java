@@ -31,7 +31,7 @@ public class StrongPasswordEstimatorTest {
 	@Test(expected = StrongPasswordException.class)
 	public void testEstimateInvalidOptions() throws Exception {
 		StrongPasswordOptions options = new StrongPasswordOptions();
-		options.setLength(-1);
+		options.setPasswordLength(-1);
 		estimator.estimateDecodeTime(options, "test");
 	}
 
@@ -43,7 +43,7 @@ public class StrongPasswordEstimatorTest {
 			Assert.fail();
 		}
 		catch (StrongPasswordException e) {
-			Assert.assertEquals(StrongPasswordException.PASSWORD_TO_VALIDATE_IS_INVALID, e.getCode());
+			Assert.assertEquals(StrongPasswordException.PASSWORD_TO_ESTIMATE_IS_INVALID, e.getCode());
 		}
 	}
 
@@ -55,7 +55,7 @@ public class StrongPasswordEstimatorTest {
 			Assert.fail();
 		}
 		catch (StrongPasswordException e) {
-			Assert.assertEquals(StrongPasswordException.PASSWORD_TO_VALIDATE_IS_INVALID, e.getCode());
+			Assert.assertEquals(StrongPasswordException.PASSWORD_TO_ESTIMATE_IS_INVALID, e.getCode());
 		}
 	}
 }

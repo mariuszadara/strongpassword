@@ -8,140 +8,345 @@ package org.mariuszadara.strongpassword.api;
  */
 public class StrongPasswordException extends RuntimeException {
 
-	private static final long serialVersionUID = 5072994089446341665L;
+	private static final long serialVersionUID = 4913339686838916027L;
 
 	/**
-	 * Error code indicating the operation is not allowed
+	 * This markers indicates that the exception is caused by bad input
 	 */
-	public static final int OPERATION_NOT_ALLOWED = 1;
+	public static final int INPUT = 100;
 	
 	/**
-	 * General error code
+	 * This markers indicates that the exception is caused by execution
 	 */
-	public static final int GENERAL_ERROR = 2;
+	public static final int EXECUTION = 200;
+	
+	/**
+	 * This code indicates that the specified password length is not a number
+	 */
+	public static final int PASSWORD_LENGTH_NOT_A_NUMBER = INPUT | 1;
 
 	/**
-	 * Error code indicating that the options file has not been specified
+	 * This code indicates that the specified password length is negative
 	 */
-	public static final int OPTIONS_FILE_NOT_SPECIFIED = 3;
+	public static final int PASSWORD_LENGTH_NEGATIVE = INPUT | 2;
+	
 	/**
-	 * Error code indicating that the options file has not been found
+	 * This code indicates that the specified password length is below the minimum limit
 	 */
-	public static final int OPTIONS_FILE_NOT_FOUND = 4;
+	public static final int PASSWORD_LENGTH_BELOW_LOWER_LIMIT = INPUT | 3;
+	
 	/**
-	 * Error code indicating that options file is invalid
+	 * This code indicates that the specified password length is above the maximum limit
 	 */
-	public static final int OPTIONS_FILE_NOT_REGULAR_FILE = 5;
+	public static final int PASSWORD_LENGTH_ABOVE_UPPER_LIMIT = INPUT | 4;
+	
 	/**
-	 * Error code indicating that the options file is not readable
+	 * This code indicates that the specified minimum symbols count is not a number
 	 */
-	public static final int OPTIONS_FILE_NOT_READABLE = 6;
+	public static final int MIN_SYMBOLS_COUNT_NOT_A_NUMBER = INPUT | 5;
+	
 	/**
-	 * Error code indicating that the options file failed to load
+	 * This code indicates that the specified minimum symbols count is negative
 	 */
-	public static final int OPTIONS_FILE_LOADING_FAILED = 7;
+	public static final int MIN_SYMBOLS_COUNT_NEGATIVE = INPUT | 6;
+	
+	/**
+	 * This code indicates that the specified minimum symbols count is below the lower limit
+	 */
+	public static final int MIN_SYMBOLS_COUNT_BELOW_LOWER_LIMIT = INPUT | 7;
+	
+	/**
+	 * This code indicates that the specified minimum symbols count equals the password length
+	 */
+	public static final int MIN_SYMBOLS_COUNT_EQUALS_PASSWORD_LENGTH = INPUT | 7;
+	
+	/**
+	 * This code indicates that the specified minimum symbols count exceeds the password length
+	 */
+	public static final int MIN_SYMBOLS_COUNT_EXCEEDS_PASSWORD_LENGTH = INPUT | 8;
+	
+	/**
+	 * This code indicates that the specified minimum numbers count is invalid
+	 */
+	public static final int MIN_NUMBERS_COUNT_NOT_A_NUMBER = INPUT | 9;
+	
+	/**
+	 * This code indicates that the specified minimum numbers count is negative
+	 */
+	public static final int MIN_NUMBERS_COUNT_NEGATIVE = INPUT | 10;
+	
+	/**
+	 * This code indicates that the specified minimum numbers count is below the lower limit
+	 */
+	public static final int MIN_NUMBERS_COUNT_BELOW_LOWER_LIMIT = INPUT | 11;
+	
+	/**
+	 * This code indicates that the specified minimum symbols count equals the password length
+	 */
+	public static final int MIN_NUMBERS_COUNT_EQUALS_PASSWORD_LENGTH = 11;
+	
+	/**
+	 * This code indicates that the specified minimum symbols count exceeds the password length
+	 */
+	public static final int MIN_NUMBERS_COUNT_EXCEEDS_PASSWORD_LENGTH = INPUT | 12;
+	
+	/**
+	 * This code indicates that the specified minimum lowercase symbols count is invalid
+	 */
+	public static final int MIN_LOWERCASE_CHARACTERS_COUNT_NOT_A_NUMBER = INPUT | 13;
+	
+	/**
+	 * This code indicates that the specified minimum lowercase symbols count is negative
+	 */
+	public static final int MIN_LOWERCASE_CHARACTERS_NEGATIVE = INPUT | 14;
+	
+	/**
+	 * This code indicates that the specified minimum lowercase symbols count is below the lower limit
+	 */
+	public static final int MIN_LOWERCASE_CHARACTERS_BELOW_LOWER_LIMIT = INPUT | 15;
+	
+	/**
+	 * This code indicates that the specified minimum lowercase symbols count equals the password length
+	 */
+	public static final int MIN_LOWERCASE_CHARACTERS_EQUALS_PASSWORD_LENGTH = 16;
+	
+	/**
+	 * This code indicates that the specified minimum lowercase symbols count is exceeds the password length
+	 */
+	public static final int MIN_LOWERCASE_CHARACTERS_EXCEEDS_PASSWORD_LENGTH = INPUT | 17;
 
 	/**
-	 * Error code indicating that the password length is invalid
+	 * This code indicates that the specified minimum uppercase symbols count is invalid
 	 */
-	public static final int LENGTH_INVALID = 8;
+	public static final int MIN_UPPERCASE_CHARACTERS_COUNT_NOT_A_NUMBER = INPUT | 18;
+	
 	/**
-	 * Error code indicating that the length is too small
+	 * This code indicates that the specified minimum uppercase symbols count is negative
 	 */
-	public static final int LENGTH_TOO_SMALL = 9;
-	/**
-	 * Error code indicating that the length is too high
-	 */
-	public static final int LENGTH_TOO_HIGH = 10;
+	public static final int MIN_UPPERCASE_CHARACTERS_NEGATIVE = INPUT | 19;
 
 	/**
-	 * Error code indicating that the symbols count equals the length of the password
+	 * This code indicates that the specified minimum uppercase symbols count is below the lower limit
 	 */
-	public static final int SYMBOLS_EQUAL_LENGTH = 11;
-	/**
-	 * Error code indicating that the symbols count exceeds the length of the password
-	 */
-	public static final int SYMBOLS_EXCEEDING_LENGTH = 12;
+	public static final int MIN_UPPERCASE_CHARACTERS_BELOW_LOWER_LIMIT = INPUT | 20;
 
 	/**
-	 * Error code indicating that the numbers count equals the length of the password
+	 * This code indicates that the specified minimum uppercase symbols count equals the password length
 	 */
-	public static final int NUMBERS_EQUAL_LENGTH = 13;
-	/**
-	 * Error code indicating that the numbers count exceeds the length of the password
-	 */
-	public static final int NUMBERS_EXCEEDING_LENGTH = 14;
+	public static final int MIN_UPPERCASE_CHARACTERS_EQUALS_PASSWORD_LENGTH = 21;
 
 	/**
-	 * Error code indicating that the lowercase characters equals the length of the password
+	 * This code indicates that the specified minimum uppercase symbols count exceeds the password length
 	 */
-	public static final int LOWERCASE_CHARACTERS_EQUAL_LENGTH = 15;
-	/**
-	 * Error code indicating that the lowercase characters count exceeds the length of the password
-	 */
-	public static final int LOWERCASE_CHARACTERS_EXCEEDING_LENGTH = 16;
+	public static final int MIN_UPPERCASE_CHARACTERS_EXCEEDS_PASSWORD_LENGTH = INPUT | 22;
 
 	/**
-	 * Error code indicating that the uppercase characters equals the length of the password
+	 * This code indicates that the specified flag for exclude similar characters is invalid
 	 */
-	public static final int UPPERCASE_CHARACTERS_EQUAL_LENGTH = 17;
-	/**
-	 * Error code indicating that the uppercase characters count exceeds the length of the password
-	 */	
-	public static final int UPPERCASE_CHARACTERS_EXCEEDING_LENGTH = 18;
+	public static final int EXCLUDE_SIMILAR_CHARACTERS_FLAG_INVALID = INPUT | 23;
 
 	/**
-	 * Error code indicating that the maximum running time is invalid
+	 * This code indicates that the specified flag for exclude ambigous characters is invalid
 	 */
-	public static final int MAX_RUNNING_TIME_INVALID = 19;
+	public static final int EXCLUDE_AMBIGOUS_CHARACTERS_FLAG_INVALID = INPUT | 24;
+	
 	/**
-	 * Error code indicating that the maximum running time is too high
+	 * This code indicates that the maximum running time is invalid
 	 */
-	public static final int MAX_RUNNING_TIME_TOO_HIGH = 20;
+	public static final int MAX_RUNNING_TIME_NOT_A_NUMBER = INPUT | 25;
 
 	/**
-	 * Error code indicating that the maximum results count is invalid
+	 * This code indicates that the maximum running time is negative
 	 */
-	public static final int MAX_RESULTS_INVALID = 21;
-	/**
-	 * Error code indicating that the maximum results count is too high
-	 */
-	public static final int MAX_RESULTS_TOO_HIGH = 22;
+	public static final int MAX_RUNNING_TIME_NEGATIVE = INPUT | 26;
 
 	/**
-	 * Error code indicating that the maximum threads count is invalid
+	 * This code indicates that the maximum running time is zero
 	 */
-	public static final int MAX_THREADS_INVALID = 23;
+	public static final int MAX_RUNNING_TIME_ZERO = INPUT | 27;
+	
 	/**
-	 * Error code indicating that the maximum threads count is too high
+	 * This code indicates that the maximum running time exceeds the maximum limit
 	 */
-	public static final int MAX_THREADS_TOO_HIGHT = 24;
+	public static final int MAX_RUNNING_TIME_EXCEEDS_UPPER_LIMIT = INPUT | 28;
+	
+	/**
+	 * This code indicates that the maximum results count is invalid
+	 */
+	public static final int MAX_RESULTS_COUNT_NOT_A_NUMBER = INPUT | 29;
+	
+	/**
+	 * This code indicates that the maximum results count is negative
+	 */
+	public static final int MAX_RESULTS_COUNT_NEGATIVE = INPUT | 30;
+	
+	/**
+	 * This code indicates that the maximum results count is zero
+	 */
+	public static final int MAX_RESULTS_COUNT_ZERO = INPUT | 31;
+	
+	/**
+	 * This code indicates that the maximum results count exceeds the maximum limit
+	 */
+	public static final int MAX_RESULTS_COUNT_EXCEEDS_UPPER_LIMIT = INPUT | 32;
+	
+	/**
+	 * This code indicates that the maximum results count is invalid
+	 */
+	public static final int MAX_THREADS_COUNT_NOT_A_NUMBER = INPUT | 33;
+	
+	/**
+	 * This code indicates that the maximum results count is negative
+	 */
+	public static final int MAX_THREADS_COUNT_NEGATIVE = INPUT | 34;
+	
+	/**
+	 * This code indicates that the maximum results count is zero
+	 */
+	public static final int MAX_THREADS_COUNT_ZERO = INPUT | 35;
+	
+	/**
+	 * This code indicates that the maximum results count exceeds the maximum limit
+	 */
+	public static final int MAX_THREADS_COUNT_EXCEEDS_UPPER_LIMIT = INPUT | 36;
+	
+	/**
+	 * This code indicates that the symbols dictionary is invalid
+	 */
+	public static final int SYMBOLS_INVALID = INPUT | 37;
+	
+	/**
+	 * This code indicates that the symbols dictionary is empty
+	 */
+	public static final int SYMBOLS_EMPTY = INPUT | 38;
+	
+	/**
+	 * This code indicates that the symbols dictionary length exceeds the maximum limit
+	 */
+	public static final int SYMBOLS_LENGTH_EXCEEDS_UPPER_LIMIT = INPUT | 39;
 
 	/**
-	 * Error code indicating that the generator has been interrupted
+	 * This code indicates that the numbers dictionary is invalid
 	 */
-	public static final int GENERATOR_INTERRUPTED = 25;
+	public static final int NUMBERS_INVALID = INPUT | 40;
 
 	/**
-	 * Error code indicating that the password to validate is invalid
+	 * This code indicates that the numbers dictionary is empty
 	 */
-	public static final int PASSWORD_TO_VALIDATE_IS_INVALID = 26;
+	public static final int NUMBERS_EMPTY = INPUT | 41;
+	
+	/**
+	 * This code indicates that the numbers dictionary is invalid
+	 */
+	public static final int NUMBERS_LENGTH_EXCEEDS_UPPER_LIMIT = INPUT | 42;
+	
+	/**
+	 * This code indicates that the lowercase characters dictionary is invalid
+	 */
+	public static final int LOWERCASE_CHARACTERE_INVALID = INPUT | 43;
+	
+	/**
+	 * This code indicates that the lowercase characters dictionary is empty
+	 */
+	public static final int LOWERCASE_CHARACTERE_EMPTY = INPUT | 44;
+	
+	/**
+	 * This code indicates that the lowercase characters dictionary length exceeds the maximum limit
+	 */
+	public static final int LOWERCASE_CHARACTERE_EXCEEDS_UPPER_LIMIT = INPUT | 45;
+	
+	/**
+	 * This code indicates that the uppercase characters dictionary is invalid
+	 */
+	public static final int UPPERCASE_CHARACTERE_INVALID = INPUT | 46;
+	
+	/**
+	 * This code indicates that the uppercase characters dictionary is empty
+	 */
+	public static final int UPPERCASE_CHARACTERE_EMPTY = INPUT | 47;
+	
+	/**
+	 * This code indicates that the uppercase characters dictionary length exceeds the maximum limit
+	 */
+	public static final int UPPERCASE_CHARACTERE_EXCEEDS_UPPER_LIMIT = INPUT | 48;
+	
+	/**
+	 * This code indicates that the similar characters dictionary is invalid
+	 */
+	public static final int SIMILAR_CHARACTERE_INVALID = INPUT | 49;
+	
+	/**
+	 * This code indicates that the similar characters dictionary is empty
+	 */
+	public static final int SIMILAR_CHARACTERE_EMPTY = INPUT | 50;
+	
+	/**
+	 * This code indicates that the similar characters dictionary length exceeds the maximum limit
+	 */
+	public static final int SIMILAR_CHARACTERE_EXCEEDS_UPPER_LIMIT = INPUT | 51;
+	
+	/**
+	 * This code indicates that the ambigous characters dictionary is invalid
+	 */
+	public static final int AMBIGOUS_CHARACTERE_INVALID = INPUT | 52;
+	
+	/**
+	 * This code indicates that the ambigous characters dictionary is invalid
+	 */
+	public static final int AMBIGOUS_CHARACTERE_EMPTY = INPUT | 53;
+	
+	/**
+	 * This code indicates that the ambigous characters dictionary length exceeds the maximum limit
+	 */
+	public static final int AMBIGOUS_CHARACTERE_EXCEEDS_UPPER_LIMIT = INPUT | 54;
 	
 	/**
 	 * Error code indicating that the length determined by the minimum lengths of symbols, numbers, lower-case and upper-case characters
 	 * exceeds the length of the password - in this case, no password will be generated since the minimum count will never be reached.
 	 */
-	public static final int EXPECTED_MIN_LENGTH_GREATER_REQUIRED_LENGTH = 27;
+	public static final int EXPECTED_MIN_LENGTH_GREATER_REQUIRED_LENGTH = INPUT | 55;
+
+	/**
+	 * Error code indicating that the options file has not been specified
+	 */
+	public static final int OPTIONS_FILE_NOT_SPECIFIED = INPUT | 56;
 	
 	/**
-	 * Error code indicating the the actual length of the password resulting from combining the minimum symbols, number, lower-case and upper-case characters
-	 * will be equal to zero, thus not returning any password at all.
+	 * Error code indicating that the options file has not been found
 	 */
-	public static final int EXPECTED_LENGTH_IS_ZERO = 28;
+	public static final int OPTIONS_FILE_NOT_FOUND = INPUT | 57;
 	
+	/**
+	 * Error code indicating that options file is invalid
+	 */
+	public static final int OPTIONS_FILE_NOT_REGULAR_FILE = INPUT | 58;
 	
+	/**
+	 * Error code indicating that the options file is not readable
+	 */
+	public static final int OPTIONS_FILE_NOT_READABLE = INPUT | 59;
 	
+	/**
+	 * Error code indicating that the options file failed to load
+	 */
+	public static final int OPTIONS_FILE_LOADING_FAILED = INPUT | 60;
+	
+	/**
+	 * Error code indicate that password used to estimate the decode time is invalid
+	 */
+	public static final int PASSWORD_TO_ESTIMATE_IS_INVALID = INPUT | 61;
+	
+	/**
+	 * General error code
+	 */
+	public static final int GENERAL_ERROR = EXECUTION | 2;
 
+	/**
+	 * Error code indicating that the generator execution has been interrupted
+	 */
+	public static final int GENERATOR_INTERRUPTED = EXECUTION | 3;
+	
+	
 	/**
 	 * Field containg the current exception error code
 	 */

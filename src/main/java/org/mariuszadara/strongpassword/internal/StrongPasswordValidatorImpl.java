@@ -78,7 +78,7 @@ public class StrongPasswordValidatorImpl implements StrongPasswordValidator {
 				(includeUppercaseCharacters ? 1 : 0);
 		// @formatter:on
 		
-		maxGroupLength = groups == 0 ? 3 : options.getLength() / groups;
+		maxGroupLength = groups == 0 ? 3 : options.getPasswordLength() / groups;
 	}
 
 	private long countSymbols(String candidate) {
